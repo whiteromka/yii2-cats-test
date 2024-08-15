@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Account;
 use app\models\Car;
+use app\models\Cat;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -63,6 +64,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
         $cars = Car::find()->where(['name' => 'lada 10'])->all();
         $carBmwX5 = Car::find()
             ->where(['name' => 'bmw'])
@@ -76,7 +78,8 @@ class SiteController extends Controller
             'cars' => $cars,
             'carBmwX5' => $carBmwX5,
             'accountAnna' => $account,
-            'accounts' => $accounts
+            'accounts' => $accounts,
+            'cat' => $cat,
         ]);
     }
 

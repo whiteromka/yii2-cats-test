@@ -38,8 +38,14 @@ class CatController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CatSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $searchModel = new CatSearch(); // Создаем поисковую модель
+
+        //http://yii2-lessons.local/cat/index
+        //?CatSearch[name]=
+        //&CatSearch[breed]=Дворовый кот
+        $params = $this->request->queryParams; // получить параметры поиска
+        //$params = $_REQUEST; // получить параметры поиска
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

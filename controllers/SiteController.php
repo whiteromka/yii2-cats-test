@@ -64,6 +64,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // Одна из будущих тем:
+        // 1 https://www.yiiframework.com/doc/guide/2.0/ru/start-databases
+        // 2 https://www.yiiframework.com/doc/guide/2.0/ru/db-query-builder
+
+        //$catX = Cat::find()->where(['name' => 'Myrzik']);
+        //$sql =  $catX->createCommand()->getRawSql();
+
+          // Пример прямого запроса к БД на вставку данных!
+//        $db = Yii::$app->getDb();
+//        $db->createCommand('INSERT INTO `cat` (`name`) VALUES (:name)', [
+//            ':name' => 'Qiang',
+//        ])->execute();
+
+//        $db = Yii::$app->getDb();
+//        $someCast = $db->createCommand('SELECT * FROM cat WHERE name = :name', [
+//            ':name' => 'Vasay',
+//        ])->queryAll();
+
+
         $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
         $cars = Car::find()->where(['name' => 'lada 10'])->all();
         $carBmwX5 = Car::find()

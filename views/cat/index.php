@@ -28,11 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
+            'id',
             'name',
-            //'age',
-            //'gender',
-            //'price',
+            'age',
+            'gender',
+            'price',
             'breed',
+            'aaaa_aaa2', // мое кастомное поле. У кота нет этой характеристики
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Cat $model, $key, $index, $column) {

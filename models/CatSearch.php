@@ -12,6 +12,8 @@ use app\models\Cat;
 class CatSearch extends Cat
 {
     /**
+     * Правила валидации для поиска
+     *
      * {@inheritdoc}
      */
     public function rules()
@@ -23,6 +25,8 @@ class CatSearch extends Cat
     }
 
     /**
+     * Метод сценариев.
+     *
      * {@inheritdoc}
      */
     public function scenarios()
@@ -32,7 +36,7 @@ class CatSearch extends Cat
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Метод поиска. Он у всех поисковых моделей практически одинаковый
      *
      * @param array $params
      *
@@ -40,32 +44,40 @@ class CatSearch extends Cat
      */
     public function search($params)
     {
-        $query = Cat::find();
+        // Пример получения сущности кота:
+        // $cat = Cat::find()->where(['name' => 'Myrzik'])->one();  // тут Кот (объект Cat)
 
-        // add conditions that should always apply here
+        // тут не кот!!! тут запрос на получение кота
+        // тут запрос к БД (объект запроса к БД ActiveQuery\Query)
+        $query = Cat::find(); // соответствует примерно этому SQL: select * from 'cat';
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
 
+        // После выполнения этой строки данные из формы будут загружены в поисковую модель т.е. в $this
+        // т.е. в $this->name, $this->age итд будут те значения что вписали в поисковую форму
         $this->load($params);
+        // $name = $this->name; // Vasya (то что прилетело из формы)
+        // $age = $this->age; // (то что прилетело из формы)
 
+        // Если произошла ошибка валидация этой поисковой модели то просто вернем всех котов
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        // если используем andFilterWhere(...) то все параметры подставятся в sql запрос
+        // только в том случае если параметры были в форме(не пустыми)
         $query->andFilterWhere([
-            'id' => $this->id,
-            'age' => $this->age,
-            'gender' => $this->gender,
+            'id' => $this->id, // sql... and id = <idForm> только если id был в форме, если его не было это строка не отработает
+            'age' => $this->age, // sql... and age = <ageForm> только если age был в форме, ...
+            'gender' => $this->gender, // тоже самое
             'price' => $this->price,
         ]);
+        //SQL: select * from 'cat' where id = <idForm> and age = <ageForm> and .....
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'breed', $this->breed]);
+           // ->andFilterWhere(['like', 'age', $this->age]);
+           //SQL: select * from 'cat' where ... and name like "% <nameFomr> %" ...
 
         return $dataProvider;
     }

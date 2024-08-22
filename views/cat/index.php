@@ -10,18 +10,24 @@ use yii\grid\GridView;
 /** @var app\models\CatSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Cats';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Cats!!!!!'; // Это служебный тег Title
+$this->params['breadcrumbs'][] = $this->title; // Это хлебные крошки
+$this->params['breadcrumbs'][] = 'Моя страница';
+$this->params['breadcrumbs'][] = '1';
 ?>
 <div class="cat-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- Это экранирование спец символов -->
+    <h1><?= Html::encode("Cats!!!!!") ?></h1>
 
     <p>
         <?= Html::a('Добавить кота', ['create'], ['class' => 'btn btn-success']) ?>
+<!--        <a href="/cat/create" class="btn btn-success">Добавить кота</a>-->
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<!--    --><?php //echo $this->render('_search', [
+//            'model' => $searchModel
+//    ]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

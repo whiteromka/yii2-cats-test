@@ -10,10 +10,18 @@ use yii\widgets\ActiveForm;
 
 <div class="cat-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <form action=""></form>
+
+    <?php $form = ActiveForm::begin(); ?> <!--  <form action="/cat/create" method="POST">  -->
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
+    <!-- Строка выше отрендерит эту разметку
+    <div class="form-group field-cat-name required has-error">
+    <label class="control-label" for="cat-name">Имя</label>
+    <input type="text" id="cat-name" class="form-control" name="Cat[name]" maxlength="255" aria-required="true" aria-invalid="true">
+    <div class="help-block">Значение «Имя» должно содержать минимум 12 символа.</div>
+    </div>
+    -->
     <?= $form->field($model, 'age')->textInput() ?>
 
     <?= $form->field($model, 'gender')->textInput() ?>
@@ -24,6 +32,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <button type="submit" class="btn btn-success">Save</button>
     </div>
 
     <?php ActiveForm::end(); ?>

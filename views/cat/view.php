@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Cats', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'го login', 'url' => ['site/login']];
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="cat-view">
@@ -26,16 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'age',
-            'gender',
-            'price',
-            'breed',
-        ],
-    ]) ?>
+    <?php // Это не понадобится ?>
+<!--    --><?php //= DetailView::widget([
+//        'model' => $model,
+//        'attributes' => [
+//            'id',
+//            'name',
+//            'age',
+//            'gender',
+//            'price',
+//            'breed',
+//        ],
+//    ]) ?>
+
+
+    <p><?=  $model->name ?></p>
+    <?=  $model->age ?>
+    <?=  $model->price ?>
 
 </div>

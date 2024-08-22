@@ -24,7 +24,7 @@ class CatController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        'delete' => ['POST'],
+                        'delete' => ['POST', 'GET'],
                     ],
                 ],
             ]
@@ -43,6 +43,15 @@ class CatController extends Controller
         //http://yii2-lessons.local/cat/index
         //?CatSearch[name]=
         //&CatSearch[breed]=Дворовый кот
+
+//        Так выглядят params:
+//        [
+//            'CatSearch' => [
+//                'id' => '',
+//                'name' => 'Vasya',
+//                '...'
+//            ]
+//        ]
         $params = $this->request->queryParams; // получить параметры поиска
         //$params = $_REQUEST; // получить параметры поиска
         $dataProvider = $searchModel->search($params);
@@ -54,6 +63,22 @@ class CatController extends Controller
     }
 
     /**
+     * Finds the Cat model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Cat the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        $model = Cat::findOne(['id' => $id]);
+        if ($model) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
      * Displays a single Cat model.
      * @param int $id ID
      * @return string
@@ -61,8 +86,10 @@ class CatController extends Controller
      */
     public function actionView($id)
     {
+        // http://yii2-lessons.local/cat/view?id=2
+        $model = $this->findModel($id); // $id = 2 из ссылки в браузере
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -75,9 +102,15 @@ class CatController extends Controller
     {
         $model = new Cat();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) { // Если запрос был отправлен через метод POST
+            // и данные в модель были загружены
+            // $model->age = $_POST['age'];
+            // $model->... $_POST['class'];
+            // ...
+            if ($model->load($this->request->post())) {
+                if ($model->save()) { // и кот был успешно сохранен в БД
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -117,24 +150,8 @@ class CatController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $cat = $this->findModel($id);
+        $cat->delete();
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Cat model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Cat the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Cat::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

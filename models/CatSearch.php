@@ -11,6 +11,8 @@ use app\models\Cat;
  */
 class CatSearch extends Cat
 {
+    //public $aaa2;
+
     /**
      * Правила валидации для поиска
      *
@@ -19,8 +21,10 @@ class CatSearch extends Cat
     public function rules()
     {
         return [
-            [['id', 'age', 'gender', 'price'], 'integer'],
-            [['name', 'breed'], 'safe'],
+            [['id', 'age', 'price', 'gender'], 'integer'],
+            [['name', 'breed', ], 'safe'],
+            //[['gender',], 'safe'],
+            //[['aaa2',], 'safe'],
         ];
     }
 

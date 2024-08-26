@@ -44,11 +44,14 @@ $config = [
         ],
         'db' => $db,
 
+        // Маршрутизатор
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // то как в url       =>   какой контроллер и экшен стартанет по этому url
                 //'cat/view/<id:\d+>' => 'cat/view',
+                '/cat/create-cats/<count:\d+>' => '/cat/create-cats',
             ],
         ],
 

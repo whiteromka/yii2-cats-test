@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Cat;
 use app\models\CatSearch;
+use app\components\CatCreator;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -153,5 +154,18 @@ class CatController extends Controller
         $cat = $this->findModel($id);
         $cat->delete();
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Создает N случайных котов
+     * url: .../cat/create-cats
+     */
+    public function actionCreateCats(int $count = 10)
+    {
+        $creator = new CatCreator();
+        $count = $creator->create($count);
+        return $this->render('create-cats', [
+            'count' => $count
+        ]);
     }
 }

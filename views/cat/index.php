@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = '1';
 //            'model' => $searchModel
 //    ]); ?>
 
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -37,11 +38,29 @@ $this->params['breadcrumbs'][] = '1';
             'id',
             'name',
             'age',
-            'gender',
+            //'gender',
+            // !!!
+                [
+                    'attribute' => 'gender',
+                    'filter' => [0 =>'девочка', 1 => 'мальчик'],
+                    'value' => function (Cat $model) {
+                        return $model->gender == 1 ? 'мальчик' : 'девочка';
+                    }
+                ],
             'price',
             'breed',
-            'aaaa_aaa2', // мое кастомное поле. У кота нет этой характеристики
+            'aaa1', // Мое кастомное поле. У кота нет этой характеристики
+
+            // Другое кастомное поле
+//            [
+//                    'attribute' => 'aaa2',
+//                    'value' =>  function (Cat $model) {
+//                          // ... тут код ...
+//                        return $model->name  . '-' . $model->age;
+//                    }
+//            ],
             [
+                'template' => '{update} {delete}', // какие кнопки отображать ({view} - глаз {update}, - карандаш, {delete} - корзина)
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Cat $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

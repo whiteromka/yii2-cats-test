@@ -9,38 +9,50 @@ use yii\db\Exception;
 class CatCreator
 {
     /**
+     * Вернет кол-во успешно сохраненных котов
+     *
      * @param int $count - кол-во котов
+     * @return ['errors' => 12, 'success' => 2000]
      * @throws Exception
      */
-    public function create(int $count): int
+    public function create(int $count): array
     {
-        $i = $count;
-
-        while ($i > 0) {
-            // create new cat
+        $result = ['errors' => 0, 'success' => 0];
+        while ($count > 0) {
             $cat = new Cat();
-
-            $cat->age = random_int(1, 20);
-            $cat->gender = random_int(0, 1);
-            //         если пол == мальчик   то     имя мальчика   иначе      девочка
-            $cat->name = ($cat->gender == 1) ? Cat::getRandomName() : Cat::getRandomName(false);
-            $cat->price = random_int(1, 100) * 1000;
-            $cat->breed = Cat::getRandomBreed();
-
-            // load() Дописать
-//            $data = $this->getRandomData();
-//            $cat->load($data);
-
-            $cat->save(); // Сохранить/Обновить в БД - фреймворк сам знает что нужно сделать
-            $i--;
+            $dataCat = $this->getRandomData();
+            $cat->load($dataCat);
+            /** @var bool $currentCatSaveResult - true/false т.е. успешно сохранили кота или кот не сохранился */
+            $currentCatSaveResult = $cat->save(); // Сохранить/Обновить в БД - фреймворк сам знает что нужно сделать
+            if ($currentCatSaveResult) {
+                $result['success']++;
+            } else {
+                $result['errors']++;
+            }
+            $count--;
         }
-
-        return $count;
+        return $result;
     }
 
-
-    private function getRandomData()
+    /**
+     *  Создает рандомные данные для кота
+     */
+    private function getRandomData(): array
     {
-        // Дописать
+        $age = random_int(1, 20);
+        $gender = random_int(0, 1);
+        $name = ($gender == 1) ? Cat::getRandomName() : Cat::getRandomName(false);
+        $price = random_int(1, 100) * 1000;
+        $breed = Cat::getRandomBreed();
+
+        return [
+            'Cat' => [
+                'age' => $age,
+                'gender' => $gender,
+                'name' => $name,
+                'price' => $price,
+                'breed' => $breed,
+            ]
+        ];
     }
 }

@@ -60,7 +60,7 @@ class Cat extends \yii\db\ActiveRecord
         $boys = [
             'Ethan', 'Liam', 'Noah', 'Lucas', 'Oliver', 'Benjamin', 'Logan', 'William', 'Alexander', 'Elijah',
             'James', 'Gabriel', 'Michael', 'Daniel', 'Anthony', 'Christopher', 'Joshua', 'Mason', 'Andrew', 'Samuel',
-            'Julian', 'Owen', 'Caleb', 'Jaxon', 'Hunter', 'Landon', 'Aiden', 'Gavin', 'Cameron', 'Cooper',
+            'Julian', 'Owen', 'Caleb', 'Jaxon', 'Hunter', 'Landon', 'Aiden', 'Gavin', 'Cameron', 'Cooper' , 'A', 'B', 'C', 'D', 'E',
         ];
 
         $gils = [

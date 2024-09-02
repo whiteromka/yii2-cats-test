@@ -163,7 +163,9 @@ class CatController extends Controller
     public function actionCreateCats(int $count = 10)
     {
         $creator = new CatCreator();
-        $result = $creator->create($count);
+        $creator->create($count);
+        $result = $creator->getInfo();
+
         return $this->render('create-cats', [
             'result' => $result
         ]);

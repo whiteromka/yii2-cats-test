@@ -16,6 +16,8 @@ class CatCreator
     /** @var array ['Myrzik' => 'Слишком короткое имя', 'Машка' => '...'] */
     private array $errorsCatNames = [];
 
+    private array $badCats = [];
+
     /**
      * Результат работы
      *
@@ -28,6 +30,7 @@ class CatCreator
             'countSuccess' => $this->countSuccess,
             'successCatNames' => $this->successCatNames,
             'errorsCatNames' => $this->errorsCatNames,
+            'badCats' => $this->badCats,
         ];
     }
 
@@ -52,8 +55,9 @@ class CatCreator
             } else {
                 $this->countErrors++;
                 // получить только значения из массива
-                $errors = array_values($cat->getErrors());
-                $this->errorsCatNames[$cat->name] = $errors[0];
+                //$errors = array_values($cat->getErrors());
+                // $this->errorsCatNames[$cat->name] = $errors[0]; // перезапись имен котов !!!
+                $this->badCats[] = $cat;
             }
             $count--;
         }

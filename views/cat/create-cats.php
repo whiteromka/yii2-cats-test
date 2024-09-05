@@ -3,6 +3,8 @@
 /** @var yii\web\View $this */
 /** @var array $result */
 
+use app\models\Cat;
+
 //debug($result);
 ?>
 
@@ -23,15 +25,31 @@
             <h2>К сожалению не создалось <?= $result['countErrors'] ?> котов!</h2>
         <?php } ?>
 
-        <ul>
-            <?php
-            $badCats = $result['errorsCatNames'];
-            foreach ($badCats as $catName => $errorList) {
-                foreach ($errorList as $error) {
-                    echo "<li> $catName - $error </li>";
+        <?php
+//        $badCats = $result['errorsCatNames'];
+//        foreach ($badCats as $id => $errorList) {
+//            $content = $id;
+//            foreach ($errorList as $error) {
+//                $content .= ' ' . $error[0] . ';';
+//            }
+//            echo "<p> $content </p>";
+//        } ?>
+
+        <?php
+            $number = 1;
+            $badCats = $result['badCats'];
+            /** @var Cat $cat */
+            foreach ($badCats as $cat) {
+                $content = "<b>" . $cat->name . " : </b>";
+                $prettyErrors = $cat->getPrettyErrors();
+                foreach ($prettyErrors as $error) {
+                    $content .= $error . '!!!!! ';
                 }
-            } ?>
-            <ul>
+                echo "<p> <i>$number)</i> $content </p>";
+                $number++;
+            }
+        ?>
+
     </div>
 </div>
 

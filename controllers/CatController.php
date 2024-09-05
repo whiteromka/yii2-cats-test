@@ -170,4 +170,17 @@ class CatController extends Controller
             'result' => $result
         ]);
     }
+    // http://yii2-lessons.local/cat/create-cats/1000
+    // http://yii2-lessons.local/site/about
+
+    // http://yii2-lessons.local/cat/t
+    public function actionT()
+    {
+        $data = [];
+        $data['a'] = 1;
+        $data['b'] = 2;
+        $data['a'] = 3;
+
+        debug($data);
+    }
 }

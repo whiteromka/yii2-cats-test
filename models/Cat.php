@@ -53,4 +53,37 @@ class Cat extends \yii\db\ActiveRecord
             'breed' => 'Порода',
         ];
     }
+
+    /**
+     * Вернет ошибки валидации если они есть
+     */
+    public function getPrettyErrors(): array
+    {
+        $prettyErrors = [];
+
+        $errors = array_values($this->getErrors());
+//        [
+//            0 => [
+//                0 => 'Значение «Возраст» не должно превышать 5.',
+//            ],
+//            1 => [
+//                0 => 'Значение «Цена» не должно превышать 1000.',
+//            ]
+//        ];
+
+        foreach ($errors as $errorList) {
+            foreach ($errorList as $error) {
+                $prettyErrors[] = $error;
+            }
+        }
+        return $prettyErrors;
+// $prettyErrors
+//        [
+//            'Значение «Возраст» не должно превышать 5.',
+//            'Значение «Цена» не должно превышать 1000.'
+//        ];
+
+    }
+
+
 }

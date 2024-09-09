@@ -32,11 +32,13 @@ class Account extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phone', 'passport_number', 'balance'], 'required'],
+            [['name', 'phone', 'passport_number', 'balance', 'email'], 'required'],
             [['passport_number', 'balance'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['last_name', 'email'], 'string', 'max' => 100],
             [['phone'], 'string', 'min'=>3, 'max' => 11],
+            [['email'], 'unique'],
+            [['email'], 'email'],
         ];
     }
 

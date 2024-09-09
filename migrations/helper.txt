@@ -1,0 +1,50 @@
+    -- СОЗДАНИЕ ТАБЛИЦ -----
+    /**
+     * {@inheritdoc}
+     */
+    public function safeUp()
+    {
+        $this->execute('
+            CREATE TABLE {{%user}} (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(255) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                created_at INT NOT NULL,
+                updated_at INT NOT NULL
+            )
+        ');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function safeDown()
+    {
+        $this->execute('DROP TABLE IF EXISTS {{%user}}');
+    }
+
+    ИЛИ БОЛЕЕ ПРАВИЛЬНЫЙ ВАРИАНТ ЧЕРЕЗ SQL БИЛДЕР ФРЕЙМВОРКА
+
+    /**
+     * {@inheritdoc}
+     */
+    public function safeUp()
+    {
+        $this->createTable('{{%user}}', [
+            'id' => $this->primaryKey(),
+            'username' => $this->string()->notNull()->unique(),
+            'password' => $this->string()->notNull(),
+            'email' => $this->string()->notNull()->unique(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function safeDown()
+    {
+        $this->dropTable('{{%user}}');
+    }

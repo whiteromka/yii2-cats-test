@@ -3,7 +3,7 @@
 /** @var yii\web\View $this */
 /** @var Car[] $cars */
 /** @var Car $carBmwX5 */
-/** @var Account $accountAnna */
+/** @var Account|null $accountAnna */
 /** @var Account[] $accounts */
 /** @var Cat|null $cat */
 
@@ -39,9 +39,11 @@ $this->title = 'My Yii Application';
     }?>
 
     <h3>Anna:</h3>
-    <p><?= $accountAnna->name?> </p>
-    <p><?= $accountAnna->email?> </p>
-    <p><?= $accountAnna->balance ?></p>
+    <?php if ($accountAnna) { ?>
+        <p><?= $accountAnna->name ?> </p>
+        <p><?= $accountAnna->email ?> </p>
+        <p><?= $accountAnna->balance ?></p>
+    <?php } ?>
 
 
     <h3>Cars:</h3>
@@ -56,7 +58,7 @@ $this->title = 'My Yii Application';
     </ul>
 
     <h3>Bmw:</h3>
-    <?= $carBmwX5->name . ' - ' . $carBmwX5->year ?>
+    <?php // $carBmwX5->name . ' - ' . $carBmwX5->year ?>
 
 
     <div class="body-content">

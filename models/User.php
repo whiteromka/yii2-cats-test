@@ -2,113 +2,63 @@
 
 namespace app\models;
 
-use yii\base\BaseObject;
-use yii\web\IdentityInterface;
+use Yii;
 
-class User extends BaseObject implements IdentityInterface
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $last_name # ?
+ * @property string $email
+ * @property string $password_hash # ?
+ * @property int $status
+ * @property string $breed
+ * @property string $created_at
+ * @property string|null $updated_at
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-        '102' => [
-            'id' => '102',
-            'username' => 'Roma',
-            'password' => 'Roma',
-            'authKey' => 'Roma102key',
-            'accessToken' => '102-token',
-        ],
-    ];
-
-
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'user';
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function rules()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return [
+            [['name'], 'string', 'max' => 60],
+            [['last_name'], 'string', 'max' => 60],
+            [['password_hash'], 'string', 'max' => 100],
+            [['name', 'last_name', 'email', 'password_hash', 'status'], 'required'],
+            [['status'], 'integer'],
+            ['status', 'in', 'range' => [0, 1]],
+            [['email'], 'email'],
+            [['email'], 'unique'],
+            [['created_at', 'updated_at'], 'safe']
+        ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getId()
+    public function attributeLabels()
     {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
+        return [
+            'id' => 'ID',
+            'name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'password_hash' => 'Хэш пароля',
+            'status' => 'Статус',
+            'email' => 'email',
+            'created_at' => 'Создан',
+            'updated_at' => 'Обновлен',
+        ];
     }
 }

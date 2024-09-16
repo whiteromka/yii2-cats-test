@@ -10,6 +10,7 @@
 use app\models\Account;
 use app\models\Car;
 use app\models\Cat;
+use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
 ?>
@@ -65,12 +66,18 @@ $this->title = 'My Yii Application';
 
         <div class="row">
             <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
+                <h2>Heading !!!!!</h2>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                     ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                     fugiat nulla pariatur.</p>
+
+                <a target="_blank"
+                   href="<?= Url::to('super-rom')?>"
+                >
+                    Users
+                </a>
 
                 <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
             </div>

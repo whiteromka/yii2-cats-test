@@ -9,9 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property string $name
- * @property string $last_name # ?
+ * @property string $last_name
  * @property string $email
- * @property string $password_hash # ?
+ * @property int $gender
+ * @property string $password_hash
  * @property int $status
  * @property string $breed
  * @property string $created_at
@@ -19,6 +20,9 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    public const GENDER_MALE = 'М';
+    public const GENDER_FEMALE = 'Ж';
+
     /**
      * {@inheritdoc}
      */
@@ -39,6 +43,8 @@ class User extends \yii\db\ActiveRecord
             [['name', 'last_name', 'email', 'password_hash', 'status'], 'required'],
             [['status'], 'integer'],
             ['status', 'in', 'range' => [0, 1]],
+            [['gender'], 'integer'],
+            ['gender', 'in', 'range' => [0, 1]],
             [['email'], 'email'],
             [['email'], 'unique'],
             [['created_at', 'updated_at'], 'safe']
@@ -59,6 +65,15 @@ class User extends \yii\db\ActiveRecord
             'email' => 'email',
             'created_at' => 'Создан',
             'updated_at' => 'Обновлен',
+            'gender' => 'Пол'
+        ];
+    }
+
+    public static function getGenders(): array
+    {
+        return [
+            0 => User::GENDER_FEMALE,
+            1 => User::GENDER_MALE
         ];
     }
 }

@@ -64,6 +64,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        /*
         // Одна из будущих тем:
         // 1 https://www.yiiframework.com/doc/guide/2.0/ru/start-databases
         // 2 https://www.yiiframework.com/doc/guide/2.0/ru/db-query-builder
@@ -81,24 +82,25 @@ class SiteController extends Controller
 //        $someCast = $db->createCommand('SELECT * FROM cat WHERE name = :name', [
 //            ':name' => 'Vasay',
 //        ])->queryAll();
-
+        */
 
         $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
-        $cars = Car::find()->where(['name' => 'lada 10'])->all();
-        $carBmwX5 = Car::find()
-            ->where(['name' => 'bmw'])
-            ->andWhere(['mark' => 'x5'])
-            ->one();
-        $account = Account::find()->where(['email' => 'anna@yandex.ru'])->one();
-        $usersEmail = ['anna@yandex.ru111', 'rom@yandex.ru1111'];
-        $accounts = Account::find()->where(['email' => $usersEmail])->all();
+
+        $cats = Cat::find()->limit(50)->orderBy('price DESC')->all();
+        $catsSqlQuery = Cat::find()->limit(50)->orderBy('price DESC')->createCommand()->rawSql;
+
+//        $carBmwX5 = Car::find()
+//            ->where(['name' => 'bmw'])
+//            ->andWhere(['mark' => 'x5'])
+//            ->one();
+//        $account = Account::find()->where(['email' => 'anna@yandex.ru'])->one();
+//        $usersEmail = ['anna@yandex.ru111', 'rom@yandex.ru1111'];
+//        $accounts = Account::find()->where(['email' => $usersEmail])->all();
 
         return $this->render('index', [
-            'cars' => $cars,
-            'carBmwX5' => $carBmwX5,
-            'accountAnna' => $account,
-            'accounts' => $accounts,
             'cat' => $cat,
+            'cats' => $cats,
+            'catsSqlQuery' => $catsSqlQuery
         ]);
     }
 

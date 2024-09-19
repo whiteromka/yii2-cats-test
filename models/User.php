@@ -20,8 +20,14 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    /** @var string - пол мужской */
     public const GENDER_MALE = 'М';
+
+    /** @var string - пол женский */
     public const GENDER_FEMALE = 'Ж';
+
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_DISACTIVE = 'disactive';
 
     /**
      * {@inheritdoc}
@@ -74,6 +80,17 @@ class User extends \yii\db\ActiveRecord
         return [
             0 => User::GENDER_FEMALE,
             1 => User::GENDER_MALE
+        ];
+    }
+
+    /**
+     * Получить все возможные статусы
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            0 => User::STATUS_DISACTIVE,
+            1 => User::STATUS_ACTIVE
         ];
     }
 }

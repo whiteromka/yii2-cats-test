@@ -34,7 +34,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'last_name',
             'email:email',
             'password_hash',
-            'status',
+
+            [
+                'attribute' => 'status',
+                'filter' => User::getStatuses(), // выпадающий список
+                'value' => function(User $user) { // отображение значений в строках
+                    if ($user->status === 1) {
+                        return 'active';
+                    } else {
+                        return 'disactive';
+                    }
+                }
+            ],
+//            [
+//                'attribute' => 'gender',
+//                'filter' => [0 =>'девочка', 1 => 'мальчик'],
+//                'value' => function (Cat $model) {
+//                    return $model->gender == 1 ? 'мальчик' : 'девочка';
+//                }
+//            ],
+
             'created_at',
             'updated_at',
             [

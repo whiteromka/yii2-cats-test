@@ -30,9 +30,9 @@ class Cat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'min' => 3],
-            [['age'], 'integer', 'max' => 35],
-            [['price'], 'integer', 'max' => 1000],
+            [['name'], 'string',],
+            [['age'], 'integer'],
+            [['price'], 'integer'],
             [['name', 'age', 'gender', 'breed'], 'required'],
             [['age', 'gender', 'price'], 'integer'],
             [['name', 'breed'], 'string', 'max' => 255],

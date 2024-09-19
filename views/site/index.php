@@ -1,11 +1,9 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var Car[] $cars */
-/** @var Car $carBmwX5 */
-/** @var Account|null $accountAnna */
-/** @var Account[] $accounts */
 /** @var Cat|null $cat */
+/** @var Cat[] $cats */
+/** @var string $catsSqlQuery */
 
 use app\models\Account;
 use app\models\Car;
@@ -31,37 +29,6 @@ $this->title = 'My Yii Application';
         <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
     </div>
 
-    <?php if ($accounts) {
-        foreach ($accounts as $account) {
-            echo "<p> {$account->name} - {$account->balance} </p>";
-        }
-    } else {
-        echo "<p> No accounts </p>";
-    }?>
-
-    <h3>Anna:</h3>
-    <?php if ($accountAnna) { ?>
-        <p><?= $accountAnna->name ?> </p>
-        <p><?= $accountAnna->email ?> </p>
-        <p><?= $accountAnna->balance ?></p>
-    <?php } ?>
-
-
-    <h3>Cars:</h3>
-    <ul>
-    <?php foreach ($cars as $car) {
-        $name = $car->name;
-        $year = $car->year;
-        $mark = $car->mark;
-
-        echo "<li> $name -  $year - $mark</li>";
-    } ?>
-    </ul>
-
-    <h3>Bmw:</h3>
-    <?php // $carBmwX5->name . ' - ' . $carBmwX5->year ?>
-
-
     <div class="body-content">
 
         <div class="row">
@@ -81,16 +48,17 @@ $this->title = 'My Yii Application';
 
                 <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
             </div>
+
             <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+               <h3><?= $catsSqlQuery?></h3>
+                <?php
+                   //debug($cats);
+                   foreach ($cats as $cat) {
+                       echo "<p>$cat->name - $cat->price</p>";
+                   }
+                ?>
             </div>
+
             <div class="col-lg-4">
                 <h2>Heading</h2>
 

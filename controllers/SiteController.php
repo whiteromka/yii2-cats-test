@@ -213,6 +213,12 @@ class SiteController extends Controller
         $isLoad = false;
         $dataFromGET = Yii::$app->request->get();
         //$dataFromGET = $_GET;
+
+        // реализация Артура
+//        if (!empty($dataFromGET['name'])) {
+//            $foundCats = Cat::find()->where(['name' => $cat->name])->all();
+//        }
+
         $foundCats = [];
         if ($cat->load($dataFromGET)) {
             $isLoad = true;

@@ -86,8 +86,8 @@ class SiteController extends Controller
 
         $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
 
-        $cats = Cat::find()->limit(50)->orderBy('price DESC')->all();
-        $catsSqlQuery = Cat::find()->limit(50)->orderBy('price DESC')->createCommand()->rawSql;
+        $cats = Cat::find()->orderBy('price DESC')->limit(10)->all();
+        $catsSqlQuery = Cat::find()->limit(10)->orderBy('price DESC')->createCommand()->rawSql;
 
 //        $carBmwX5 = Car::find()
 //            ->where(['name' => 'bmw'])
@@ -153,7 +153,10 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+        if (
+            $model->load(Yii::$app->request->post())
+            && $model->contact(Yii::$app->params['adminEmail'])
+        ) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 
             return $this->refresh();
@@ -198,6 +201,28 @@ class SiteController extends Controller
     {
         return $this->render('test', [
             'name' => 'Rom!!!!!!!!',
+        ]);
+    }
+
+    /**
+     * url: site/search
+     */
+    public function actionSearch()
+    {
+        $cat = new Cat();
+        $isLoad = false;
+        $dataFromGET = Yii::$app->request->get();
+        //$dataFromGET = $_GET;
+        $foundCats = [];
+        if ($cat->load($dataFromGET)) {
+            $isLoad = true;
+            $foundCats = Cat::find()->where(['name' => $cat->name])->all();
+        }
+
+        return $this->render('search', [
+            'cat' => $cat,
+            'isLoad' => $isLoad,
+            'foundCats' => $foundCats
         ]);
     }
 

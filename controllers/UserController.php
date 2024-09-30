@@ -131,4 +131,27 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionSearch()
+    {
+        $user = new User();
+
+        // это одно и тоже
+        $post = $_POST;
+        $old = \Yii::$app->request->post();
+        $new = $this->request->post();
+
+        $foundUsers = [];
+        //                                      это включение валидации
+        if ($user->load($this->request->post() /*&& $user->validate()*/ )) {
+            // Пробуем найти в БД всех пользователей по зпаросу из post()
+             //$foundUsers = User::find()->where(['name' => $user->name])->limit(2)->all();// [] / User[]
+             //$foundUsers = User::find()->limit(2)->all(); // получить первые 2-е записи из БД
+            $foundUsers = User::find()->where(['like', 'name', $user->name])->all(); // получить всех из БД у кого имя похоже на ...
+        }
+        return $this->render('search', [
+            'user' => $user,
+            'foundUsers' => $foundUsers
+        ]);
+    }
 }

@@ -16,6 +16,9 @@ use yii\web\View;
 
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($user, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($user, 'email')->textInput() ?>
+    <?= $form->field($user, 'status')->checkbox() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Найти', ['class' => 'btn btn-success']) ?>
     </div>

@@ -137,31 +137,74 @@ class UserController extends Controller
         $user = new User();
 
         // это одно и тоже
-        $post = $_POST;
-        $old = \Yii::$app->request->post();
-        $new = $this->request->post();
+//        $post = $_POST;
+//        $old = \Yii::$app->request->post();
+//        $new = $this->request->post();
 
         $foundUsers = [];
         $data = $this->request->post(); // Данные из поста
         //                                      это включение валидации
+
         if ($user->load($data /*&& $user->validate()*/ )) {
-            // Пробуем найти в БД всех пользователей по зпаросу из post()
-             //$foundUsers = User::find()->where(['name' => $user->name])->limit(2)->all();// [] / User[]
-             //$foundUsers = User::find()->limit(2)->all(); // получить первые 2-е записи из БД
+            /*
+             Пробуем найти в БД всех пользователей по зпаросу из post()
+             $foundUsers = User::find()->where(['name' => $user->name])->limit(2)->all();// [] / User[]
+             $foundUsers = User::find()->limit(2)->all(); // получить первые 2-е записи из БД
 
             // SELECT * FROM `user` WHERE (`name` LIKE '%o%') AND (`email` LIKE '%%')
-//            $foundUsers = User::find()
-//                ->where(['like', 'name', $user->name])
-//                ->andWhere(['like', 'email', $user->email])
-//                ->all(); // получить всех из БД у кого имя похоже на ...
+            $foundUsers = User::find()
+                ->where(['like', 'name', $user->name])
+                ->andWhere(['like', 'email', $user->email])
+                ->all(); // получить всех из БД у кого имя похоже на ...
 
             // SELECT * FROM `user` ...
+            */
             $foundUsers = User::find()
                 ->filterWhere(['like', 'name', "$user->name%", false]) // !!!
                 // ->filterWhere("name like 'r%'") // Это тоже что и сверху
                 ->andFilterWhere(['like', 'email', $user->email])
                 ->andFilterWhere(['status' => $user->status])
                 ->all();
+        }
+        return $this->render('search', [
+            'user' => $user,
+            'foundUsers' => $foundUsers
+        ]);
+    }
+
+    public function actionSearch2()
+    {
+        $user = new User();
+        $foundUsers = [];
+
+        $name = null;
+        if (!empty($_POST['User']['name'])) {
+            $name = $_POST['User']['name'];
+        }
+
+        $email = null;
+        if (!empty($_POST['User']['email'])) {
+            $email = $_POST['User']['email'];
+        }
+
+        $status = null;
+        if (!empty($_POST['User']['status'])) {
+            $name = $_POST['User']['status'];
+        }
+
+        if (!empty($name) || !empty($email) || !empty($status)) {
+            $foundUsers = User::find()->all()
+                ->filterWhere(['like', 'name', "$name%", false])
+                ->andFilterWhere(['like', 'email', $email])
+                ->andFilterWhere(['status' => $status])
+                ->all();
+
+            // SELECT
+            // * FROM user
+            // WHERE name LIKE 'r%'
+            // AND email LIKE '%@%'
+            // AND status = 1
+            // LIMIT 1
         }
         return $this->render('search', [
             'user' => $user,

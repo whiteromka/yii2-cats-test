@@ -14,7 +14,11 @@ use yii\web\View;
 <div>
     <h1>Поиск пользователей</h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <!-- <form method="POST" action="user/search2">  -->
+    <?php $form = ActiveForm::begin([
+        'method' => 'GET',
+        'action' => ['user/search2'],
+    ]); ?>
     <?= $form->field($user, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($user, 'email')->textInput() ?>
     <?= $form->field($user, 'status')->checkbox() ?>

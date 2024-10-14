@@ -193,7 +193,7 @@ class UserController extends Controller
         }
 
         if (!empty($name) || !empty($email) || !empty($status)) {
-            $foundUsers = User::find()->all()
+            $foundUsers = User::find()
                 ->filterWhere(['like', 'name', "$name%", false])
                 ->andFilterWhere(['like', 'email', $email])
                 ->andFilterWhere(['status' => $status])

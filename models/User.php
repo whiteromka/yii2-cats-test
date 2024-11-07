@@ -13,10 +13,12 @@ use Yii;
  * @property string $email
  * @property int $gender
  * @property string $password_hash
- * @property int $status
+ * @property int $status_id
  * @property string $breed
  * @property string $created_at
  * @property string|null $updated_at
+ *
+ * @property Status $status
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -46,9 +48,8 @@ class User extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 60],
             [['last_name'], 'string', 'max' => 60],
             [['password_hash'], 'string', 'max' => 100],
-            [['name', 'last_name', /*'email',*/ 'password_hash', 'status'], 'required'],
-            [['status'], 'integer'],
-            ['status', 'in', 'range' => [0, 1]],
+            [['name', 'last_name', /*'email',*/ 'password_hash', 'status_id'], 'required'],
+            [['status_id'], 'integer'],
             [['gender'], 'integer'],
             ['gender', 'in', 'range' => [0, 1]],
             [['email'], 'email'],
@@ -67,12 +68,17 @@ class User extends \yii\db\ActiveRecord
             'name' => 'Имя',
             'last_name' => 'Фамилия',
             'password_hash' => 'Хэш пароля',
-            'status' => 'Статус',
+            'status_id' => 'Статус ID',
             'email' => 'email',
             'created_at' => 'Создан',
             'updated_at' => 'Обновлен',
             'gender' => 'Пол'
         ];
+    }
+
+    public function getStatus()
+    {
+        return $this->hasOne(Status::class, ['id' => 'status_id']);
     }
 
     public static function getGenders(): array

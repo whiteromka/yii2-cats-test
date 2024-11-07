@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Status;
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -16,12 +17,12 @@ use yii\web\View;
 
     <!-- <form method="POST" action="user/search2">  -->
     <?php $form = ActiveForm::begin([
-        'method' => 'GET',
-        'action' => ['user/search2'],
+        'method' => 'POST',
+        'action' => ['user/search'],
     ]); ?>
     <?= $form->field($user, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($user, 'email')->textInput() ?>
-    <?= $form->field($user, 'status')->checkbox() ?>
+    <?= $form->field($user, 'status_id')->checkbox(['uncheck' => 2]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Найти', ['class' => 'btn btn-success']) ?>
@@ -30,7 +31,8 @@ use yii\web\View;
 
     <div>
         <?php foreach ($foundUsers as $user) {
-            echo "<p> $user->name - $user->email - $user->status </p>";
+            echo "<p> $user->name - $user->email</p>";
+            echo $user->status->name;
         } ?>
 
     </div>

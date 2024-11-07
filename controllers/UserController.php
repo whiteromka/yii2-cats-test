@@ -143,8 +143,7 @@ class UserController extends Controller
 
         $foundUsers = [];
         $data = $this->request->post(); // Данные из поста
-        //                                      это включение валидации
-
+        //                         это включение валидации
         if ($user->load($data /*&& $user->validate()*/ )) {
             /*
              Пробуем найти в БД всех пользователей по зпаросу из post()
@@ -163,7 +162,7 @@ class UserController extends Controller
                 ->filterWhere(['like', 'name', "$user->name%", false]) // !!!
                 // ->filterWhere("name like 'r%'") // Это тоже что и сверху
                 ->andFilterWhere(['like', 'email', $user->email])
-                ->andFilterWhere(['status' => $user->status])
+                ->andFilterWhere(['status_id' => $user->status_id])
                 ->all();
         }
         return $this->render('search', [

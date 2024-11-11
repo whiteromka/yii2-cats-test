@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Cat;
 use app\models\Status;
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
@@ -12,6 +13,7 @@ use yii\web\View;
 
 ?>
 
+
 <div>
     <h1>Поиск пользователей</h1>
 
@@ -22,7 +24,8 @@ use yii\web\View;
     ]); ?>
     <?= $form->field($user, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($user, 'email')->textInput() ?>
-    <?= $form->field($user, 'status_id')->checkbox(['uncheck' => 2]) ?>
+    <?php // echo $form->field($user, 'status_id')->checkbox(['uncheck' => 2]) ?>
+    <?php echo $form->field($user, 'status_id')->dropDownList(Status::getStatuses()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Найти', ['class' => 'btn btn-success']) ?>
@@ -32,7 +35,8 @@ use yii\web\View;
     <div>
         <?php foreach ($foundUsers as $user) {
             echo "<p> $user->name - $user->email</p>";
-            echo $user->status->name;
+            echo "<p> {$user->status->name} </p>";
+            echo $user->status->id;
         } ?>
 
     </div>

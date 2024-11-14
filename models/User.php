@@ -19,6 +19,7 @@ use Yii;
  * @property string|null $updated_at
  *
  * @property Status $status
+ * @property Car $car
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -79,6 +80,11 @@ class User extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(Status::class, ['id' => 'status_id']);
+    }
+
+    public function getCar()
+    {
+        return $this->hasOne(Car::class, ['id' => 'car_id']);
     }
 
     public static function getGenders(): array

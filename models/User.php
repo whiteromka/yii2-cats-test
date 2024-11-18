@@ -20,6 +20,7 @@ use Yii;
  *
  * @property Status $status
  * @property Car $car
+ * @property Passport $passport
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -85,6 +86,14 @@ class User extends \yii\db\ActiveRecord
     public function getCar()
     {
         return $this->hasOne(Car::class, ['id' => 'car_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPassport()
+    {
+        return $this->hasOne(Passport::class, ['user_id' => 'id']);
     }
 
     public static function getGenders(): array

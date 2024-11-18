@@ -210,4 +210,13 @@ class UserController extends Controller
             'foundUsers' => $foundUsers
         ]);
     }
+
+    public function actionUserPassport()
+    {
+        //                    !!! оптимизация
+        $users = User::find()->with('passport')->all();
+        return $this->render('user-passport', [
+            'users' => $users,
+        ]);
+    }
 }

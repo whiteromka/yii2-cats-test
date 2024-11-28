@@ -5,9 +5,12 @@ namespace app\controllers;
 use app\models\Cat;
 use app\models\CatSearch;
 use app\components\CatCreator;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\CatPicForm;
+use yii\web\UploadedFile;
 
 /**
  * CatController implements the CRUD actions for Cat model.
@@ -170,17 +173,23 @@ class CatController extends Controller
             'result' => $result
         ]);
     }
-    // http://yii2-lessons.local/cat/create-cats/1000
-    // http://yii2-lessons.local/site/about
 
-    // http://yii2-lessons.local/cat/t
-    public function actionT()
+    public function actionPic(int $id)
     {
-        $data = [];
-        $data['a'] = 1;
-        $data['b'] = 2;
-        $data['a'] = 3;
+        $model = new CatPicForm();
 
-        debug($data);
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload($id)) {
+                Yii::$app->session->setFlash('success', 'Картинки успешно загружены');
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->render('pic', [
+            'id' => $id,
+            'model' => $model
+        ]);
     }
+
+
 }

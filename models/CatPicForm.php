@@ -19,26 +19,21 @@ class CatPicForm extends Model
         ];
     }
 
-    public function upload(/*int $catId*/)
+    public function upload(int $catId)
     {
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
-                $file->saveAs('uploads/cats/' . $file->baseName . '.' . $file->extension);
-                // $c = new CatPic();
-                // $c->catId = $catId;
-                // $c->picName = $file->baseName . salt;
-                // save()
+                $path = 'uploads/cats/' . md5($file->baseName . microtime(true)) . '.' . $file->extension;
+                $file->saveAs($path);
+
+                $catPic = new CatPic();
+                $catPic->cat_id = $catId;
+                $catPic->pic_name = '/' . $path;
+                $catPic->save();
             }
             return true;
         } else {
             return false;
         }
     }
-
-    // hasMany
-
-    // CatPic
-    // id
-    // picName
-    // catId
 }

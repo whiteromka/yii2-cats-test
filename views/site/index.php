@@ -52,11 +52,25 @@ $this->title = 'My Yii Application';
             <div class="col-lg-4 mb-3">
                <h3><?= $catsSqlQuery?></h3>
                 <?php
-                   //debug($cats);
-                   foreach ($cats as $cat) {
-                       echo "<p>$cat->name - $cat->price</p>";
-                   }
-                ?>
+                   foreach ($cats as $cat) { ?>
+                       <div class="card">
+                            <?php
+                                $firstImg = $cat->catPics[0] ?? null;
+                                if ($firstImg) {
+                                    $firstImg = $firstImg->pic_name;
+                                }
+                            ?>
+                           <?php if ($firstImg) { ?>
+                              <img src="<?= $firstImg ?>" class="card-img-top" alt="<?= $cat->name?>" title="<?= $cat->name?>">
+                           <? } ?>
+
+                           <div class="card-body">
+                               <h5 class="card-title"><?= $cat->name?> <?= $cat->price?> $</h5>
+                               <p class="card-text"> <?= $cat->getInfo() ?></p>
+                           </div>
+                       </div>
+                       <br>
+                 <?php  } ?>
             </div>
 
             <div class="col-lg-4">

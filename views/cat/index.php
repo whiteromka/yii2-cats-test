@@ -37,15 +37,22 @@ $this->params['breadcrumbs'][] = '1';
             //['class' => 'yii\grid\SerialColumn'],
             'id',
             [
-                'attribute' => 'pic',
+                'attribute' => 'Фото',
                 'format' => 'html',
                 'value' => function (Cat $cat) {
-                    //                  /uploads/cats/cat123425.jpg
-                    return Html::img('/uploads/cats/'.$cat->catPic[0]->picName . '.jpg', [
-                        'width' => 100,
-                        'alt' => 'Тут кот с именем' . $cat->name,
-                        'title' => 'Тут кот с именем' . $cat->name
-                    ]);
+                    $pics = $cat->catPics;
+                    $html = '';
+                    if ($pics) {
+                        foreach ($pics as $pic) {
+                            $html .= Html::img($pic->pic_name, [
+                                'width' => 100,
+                                'alt' => 'Тут кот с именем' . $cat->name,
+                                'title' => 'Тут кот с именем' . $cat->name
+                            ]);
+                        }
+                        return $html;
+                    }
+                    return 'no';
                 }
             ],
             'name',

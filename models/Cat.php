@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "cat".
@@ -13,8 +14,10 @@ use Yii;
  * @property int $gender
  * @property int|null $price
  * @property string $breed
+ *
+ * @property CatPic[] $catPics
  */
-class Cat extends \yii\db\ActiveRecord
+class Cat extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -54,6 +57,11 @@ class Cat extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getCatPics()
+    {
+        return $this->hasMany(CatPic::class, ['cat_id' => 'id']);
+    }
+
     /**
      * Вернет ошибки валидации если они есть
      */
@@ -85,5 +93,12 @@ class Cat extends \yii\db\ActiveRecord
 
     }
 
-
+    public function getInfo(): string
+    {
+        return $this->name . ' ' .
+            $this->age . ' ' .
+            $this->gender . ' ' .
+            $this->breed . ' ' .
+            $this->price;
+    }
 }

@@ -4,3 +4,6 @@
 -. COntroller для ^
 -. Интерфейс для загрузки фоток (1 может быть много фоток)
 -. Model для загрузки
+
+https://github.com/whiteromka/yii2-lessons/tree/cat-photo
+https://github.com/whiteromka/yii2-lessons/compare/master...cat-photo

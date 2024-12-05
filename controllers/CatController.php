@@ -6,6 +6,7 @@ use app\models\Cat;
 use app\models\CatSearch;
 use app\components\CatCreator;
 use Yii;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -191,5 +192,19 @@ class CatController extends Controller
         ]);
     }
 
+    /**
+     * /cat/all
+     */
+    public function actionAll()
+    {
+        $query = Cat::find()->orderBy(['price' => SORT_ASC]); // Объект запроса
+        $countQuery = clone $query; // !!!
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $cats = $query->offset($pages->offset)->limit($pages->limit)->all();
 
+        return $this->render('all', [
+            'cats' => $cats,
+            'pages' => $pages,
+        ]);
+    }
 }

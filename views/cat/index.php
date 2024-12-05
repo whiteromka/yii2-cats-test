@@ -94,23 +94,12 @@ $this->params['breadcrumbs'][] = '1';
                 ],
 
             ],
-
-
-//            [
-//                'class' => 'yii\grid\ActionColumn',
-//                'template' => '{view} {update} {delete} {custom}', // Добавляем вторую кнопку
-//                'buttons' => [
-//                    'custom' => function ($url, $model, $key) {
-//                        return Html::a('Кастомная кнопка', ['your-controller/your-action', 'id' => $model->id], [
-//                            'class' => 'btn btn-success',
-//                            'data-method' => 'post',
-//                        ]);
-//                    },
-//                ],
-//            ],
-
+        ],
+        'pager' => [
+            'linkOptions' => [
+                'class' => 'page-link',
+            ],
         ],
     ]); ?>
-
 
 </div>

@@ -5,6 +5,7 @@
 
 /** @var app\models\LoginForm $model */
 
+use app\components\HelloWidget;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
@@ -13,6 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= HelloWidget::widget([
+        'message' => 'Good morning',
+        'name' => 'Rom'
+    ]) ?>
 
     <p>Please fill out the following fields to login:</p>
 

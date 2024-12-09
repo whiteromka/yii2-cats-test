@@ -101,4 +101,13 @@ class Cat extends ActiveRecord
             $this->breed . ' ' .
             $this->price;
     }
+
+    public function getFirstImg(): ?string
+    {
+        if ($this->catPics) {
+            $img = $this->catPics[0];
+            return $img->pic_name;
+        }
+        return null;
+    }
 }

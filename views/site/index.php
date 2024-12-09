@@ -5,8 +5,8 @@
 /** @var Cat[] $cats */
 /** @var string $catsSqlQuery */
 
-use app\models\Account;
-use app\models\Car;
+use app\components\HelloWidget;
+use app\components\ItemWidget;
 use app\models\Cat;
 use yii\helpers\Url;
 
@@ -33,7 +33,12 @@ $this->title = 'My Yii Application';
 
         <div class="row">
             <div class="col-lg-4 mb-3">
-                <h2>Heading !!!!!</h2>
+                <h2>Heading </h2>
+
+                <?= HelloWidget::widget([
+                    'message' => "WhatsUp bro",
+                    'name' => 'Rom'
+                ]) ?>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
@@ -53,23 +58,13 @@ $this->title = 'My Yii Application';
                <h3><?= $catsSqlQuery?></h3>
                 <?php
                    foreach ($cats as $cat) { ?>
-                       <div class="card">
-                            <?php
-                                $firstImg = $cat->catPics[0] ?? null;
-                                if ($firstImg) {
-                                    $firstImg = $firstImg->pic_name;
-                                }
-                            ?>
-                           <?php if ($firstImg) { ?>
-                              <img src="<?= $firstImg ?>" class="card-img-top" alt="<?= $cat->name?>" title="<?= $cat->name?>">
-                           <? } ?>
-
-                           <div class="card-body">
-                               <h5 class="card-title"><?= $cat->name?> <?= $cat->price?> $</h5>
-                               <p class="card-text"> <?= $cat->getInfo() ?></p>
-                           </div>
-                       </div>
-                       <br>
+                       <?= ItemWidget::widget([
+                           'imgSrc' => $cat->getFirstImg(),
+                           'name' => $cat->name,
+                           'description' => $cat->getInfo(),
+                           'buttonName' => 'Заказать кота',
+                           'buttonLink' => Url::to(['cat/add', 'id' => $cat->id])
+                       ]) ?>
                  <?php  } ?>
             </div>
 

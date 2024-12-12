@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int|null $cat_id
  * @property string|null $pic_name
+ * @property int $is_main
  *
  * @property Cat $cat
  */
@@ -29,7 +30,7 @@ class CatPic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cat_id'], 'integer'],
+            [['cat_id', 'is_main'], 'integer'],
             [['pic_name'], 'string', 'max' => 255],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cat::class, 'targetAttribute' => ['cat_id' => 'id']],
         ];
@@ -44,6 +45,7 @@ class CatPic extends \yii\db\ActiveRecord
             'id' => 'ID',
             'cat_id' => 'Cat ID',
             'pic_name' => 'Pic Name',
+            'is_main' => 'Is main',
         ];
     }
 

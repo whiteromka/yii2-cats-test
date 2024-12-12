@@ -86,3 +86,7 @@ a.desc:after {
 .form-group {
     margin-bottom: 1rem;
 }
+
+.main-pic {
+    border: 3px solid #3d9300;
+}

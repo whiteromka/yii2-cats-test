@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Cat;
+use app\models\CatPic;
 use app\models\CatSearch;
 use app\components\CatCreator;
 use Yii;
@@ -206,5 +207,18 @@ class CatController extends Controller
             'cats' => $cats,
             'pages' => $pages,
         ]);
+    }
+
+    public function actionMakePicMain(int $picId)
+    {
+        // - Все картинки для этого кота сделать is_main = 0
+
+        // - Картинку с $picId сделать главной // update cat_pic set is_main = 1 where id = 1;
+        $catPic = CatPic::find()->where(['id' => $picId])->one();
+        if ($catPic) {
+            $catPic->is_main = 1;
+            $catPic->save();
+        }
+        return $this->redirect(['/cat/index']);
     }
 }

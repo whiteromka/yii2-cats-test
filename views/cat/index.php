@@ -1,5 +1,6 @@
 <?php
 
+use app\components\AdminCatPicWidget;
 use app\models\Cat;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -44,17 +45,7 @@ $this->params['breadcrumbs'][] = '1';
                     $html = '';
                     if ($pics) {
                         foreach ($pics as $pic) {
-                            $btnUrl = Url::to(['/cat/make-pic-main', 'picId' => $pic->id]);
-                            $cssPic = $pic->is_main === 0 ? 'main-pic' : '';
-                            $html .= "
-                                <div> 
-                                    <img class='{$cssPic}' src='{$pic->pic_name}' width='100' alt='{$cat->name}'>
-                                    <div>
-                                        <a class='btn btn-sm btn-success' href='{$btnUrl}'> make main </a>
-                                    </div>
-                                    <br>
-                                </div>
-                            ";
+                            $html .= AdminCatPicWidget::widget(['cat' => $cat, 'catPic' => $pic]);
                         }
                         return $html;
                     }

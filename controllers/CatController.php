@@ -209,9 +209,28 @@ class CatController extends Controller
         ]);
     }
 
-    public function actionMakePicMain(int $picId)
+     //                                     2           1
+    public function actionMakePicMain(int $picId, int $catId) // 2
     {
+        // !!! ((((
+//        /** @var CatPic $catPic */
+//        $catPic = CatPic::find()->where(['id' => $picId])->one();
+//        $cat = $catPic->cat;
+//        $catId = $cat->id;
+
         // - Все картинки для этого кота сделать is_main = 0
+        //$catPics = CatPic::find()->where(['id' => $picId])->all();
+        $catPics = CatPic::find()->where(['not in', 'id', $picId])
+            ->andWhere(['cat_id' => $catId])
+            ->all();
+
+        if ($catPics) {
+            /** @var CatPic $catPic */
+            foreach ($catPics as $catPic) {
+                $catPic->is_main = 0;
+                $catPic->save();
+            }
+        }
 
         // - Картинку с $picId сделать главной // update cat_pic set is_main = 1 where id = 1;
         $catPic = CatPic::find()->where(['id' => $picId])->one();

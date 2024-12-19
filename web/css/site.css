@@ -86,3 +86,49 @@ a.desc:after {
 .form-group {
     margin-bottom: 1rem;
 }
+
+.main-pic {
+    border: 3px solid #3d9300;
+}
+
+/* Главная обертка для виджета */
+.main-wrap-admin-pic {
+   margin-bottom: 10px;
+}
+
+/* Кнопка Сделать главной */
+.wrap-admin-pic-cat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 4px;
+    left: 20px;
+    z-index: 99999;
+}
+.admin-pic-cat-btn {
+    padding: 2px 5px;
+    font-size: 11px;
+    border-radius: 3px;
+    color: white;
+    background: #3d9300;
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+.admin-pic-cat-btn:hover {
+    opacity: 1;
+}
+
+/* Уголок Главная картинка */
+.wrap-admin-pic-cat-main-block {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+}
+.admin-pic-cat-main-block {
+    height: 30px;
+    width: 30px;
+    background: #3d9300;
+    transform: rotate(45deg);
+}

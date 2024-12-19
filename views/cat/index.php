@@ -1,5 +1,6 @@
 <?php
 
+use app\components\AdminCatPicWidget;
 use app\models\Cat;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -44,11 +45,7 @@ $this->params['breadcrumbs'][] = '1';
                     $html = '';
                     if ($pics) {
                         foreach ($pics as $pic) {
-                            $html .= Html::img($pic->pic_name, [
-                                'width' => 100,
-                                'alt' => 'Тут кот с именем' . $cat->name,
-                                'title' => 'Тут кот с именем' . $cat->name
-                            ]);
+                            $html .= AdminCatPicWidget::widget(['cat' => $cat, 'catPic' => $pic]);
                         }
                         return $html;
                     }

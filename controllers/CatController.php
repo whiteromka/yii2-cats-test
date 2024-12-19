@@ -209,35 +209,46 @@ class CatController extends Controller
         ]);
     }
 
-     //                                     2           1
-    public function actionMakePicMain(int $picId, int $catId) // 2
+    public function actionMakePicMain(int $picId, int $catId)
     {
-        // !!! ((((
-//        /** @var CatPic $catPic */
-//        $catPic = CatPic::find()->where(['id' => $picId])->one();
-//        $cat = $catPic->cat;
-//        $catId = $cat->id;
-
-        // - Все картинки для этого кота сделать is_main = 0
+        // Вариант 1
+        // - Все картинки для этого переданного кота $catId сделать is_main = 0
         //$catPics = CatPic::find()->where(['id' => $picId])->all();
-        $catPics = CatPic::find()->where(['not in', 'id', $picId])
-            ->andWhere(['cat_id' => $catId])
-            ->all();
+//        $catPics = CatPic::find()->where(['not in', 'id', $picId])
+//            ->andWhere(['cat_id' => $catId])
+//            ->all();
+//        if ($catPics) {
+//            /** @var CatPic $catPic */
+//            foreach ($catPics as $catPic) {
+//                $catPic->is_main = 0;
+//                $catPic->save();
+//            }
+//        }
+//
+//        // - Картинку с $picId сделать главной // update cat_pic set is_main = 1 where id = 1;
+//        $catPic = CatPic::find()->where(['id' => $picId])->one();
+//        if ($catPic) {
+//            $catPic->is_main = 1;
+//            $catPic->save();
+//        }
 
-        if ($catPics) {
-            /** @var CatPic $catPic */
-            foreach ($catPics as $catPic) {
-                $catPic->is_main = 0;
+        // Вариант 2
+        $catPics = CatPic::find()->andWhere(['cat_id' => $catId])->indexBy('id')->all();
+        $otherIds = []; // Тут будут Id картинок которые нужно сделать НЕ главными
+        foreach ($catPics as $id => $catPic) {
+            if ($picId == $id) {
+                $catPic->is_main = 1;
                 $catPic->save();
+            } else {
+                $otherIds[] = $id;
             }
         }
 
-        // - Картинку с $picId сделать главной // update cat_pic set is_main = 1 where id = 1;
-        $catPic = CatPic::find()->where(['id' => $picId])->one();
-        if ($catPic) {
-            $catPic->is_main = 1;
-            $catPic->save();
-        }
+        $otherIds = implode(',', $otherIds);
+        $sqlParam = '(' . $otherIds . ')';
+        $sql = "update cat_pic set is_main = 0 where id in $sqlParam;";
+        Yii::$app->db->createCommand($sql)->execute();
+
         return $this->redirect(['/cat/index']);
     }
 }

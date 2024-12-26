@@ -63,7 +63,7 @@ $this->title = 'My Yii Application';
                            'name' => $cat->name,
                            'description' => $cat->getInfo(),
                            'buttonName' => 'Заказать кота',
-                           'buttonLink' => Url::to(['cat/add', 'id' => $cat->id])
+                           'buttonLink' => Url::to(['cart/add', 'id' => $cat->id])
                        ]) ?>
                  <?php  } ?>
             </div>

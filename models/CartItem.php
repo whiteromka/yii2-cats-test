@@ -76,4 +76,16 @@ class CartItem extends ActiveRecord
     {
         return $this->hasOne(Cat::class, ['id' => 'cat_id']);
     }
+
+    /**
+     * Сохранить\создать CartItem
+     */
+    public static function create($cartId, $catId, $price): bool
+    {
+        $cartItem = new CartItem();
+        $cartItem->cart_id = $cartId;
+        $cartItem->cat_id = $catId;
+        $cartItem->price = $price;
+        return $cartItem->save();
+    }
 }

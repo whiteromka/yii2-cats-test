@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\CartCalculator;
 use app\models\Cart;
 use app\models\CartItem;
 use app\models\Cat;
@@ -22,35 +23,14 @@ class CartController extends Controller
         // cart: id, sum, discount_percent, final_sum, status
         // cart_item: id, cart_id, cat_id, price
         // order: id, cart_id, status
-
-        // - Показать таблицы, рассказать общую логику [!]
-        // - отрефакторить код ниже [!]
-        // - корзина [!]
-        // - виджет [!]
-
         /** @var Cat $cat */
         $cat = Cat::find()->where(['id' => $id])->one();
         $cart = Cart::getActive();
-
-        if ($cat && $cart) {
-            $cartItem = new CartItem();
-            $cartItem->cart_id = $cart->id;
-            $cartItem->cat_id = $id;
-            $cartItem->price = $cat->price;
-            $successCartItemSave = $cartItem->save();
-
+        if ($cat) {
+            $successCartItemSave = CartItem::create($cart->id, $id, $cat->price);
             if ($successCartItemSave) {
-                $cart->sum = $cart->sum + $cat->price;
-                if ($cart->sum >= 100000) {
-                    $cart->discount_percent = 1;
-                }
-                if ($cart->discount_percent > 0) {
-                    $cart->final_sum = $cart->sum - $cart->getPercentDiscountSum();
-                } else {
-                    $cart->final_sum = $cart->sum;
-                }
-                $success = $cart->save();
-                if ($success) { // - всплывающее окно об успехе
+                $success = (new CartCalculator($cart, $cat))->calculate();
+                if ($success) {
                     Yii::$app->session->setFlash('success', 'Кот успешно добавлен в корзину!');
                 }
             }

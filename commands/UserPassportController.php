@@ -11,10 +11,9 @@ class UserPassportController extends Controller
     /**
      *  php yii user-passport/index
      */
-    public function actionIndex()
+    public function actionIndex(int $count = 20)
     {
-        // Тут должен выполняться код который сгенерит много пользователей и паспортов
-        $creator = new UserPassportCreator();
+        $creator = new UserPassportCreator($count);
         $creator->run();
         return ExitCode::OK;
     }

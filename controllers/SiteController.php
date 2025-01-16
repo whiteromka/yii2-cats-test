@@ -99,7 +99,7 @@ class SiteController extends Controller
 
         return $this->render('index', [
             'cat' => $cat,
-            'cats' => $cats,
+            'aa' => $cats,
             'catsSqlQuery' => $catsSqlQuery
         ]);
     }

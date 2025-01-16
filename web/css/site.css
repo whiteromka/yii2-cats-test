@@ -148,3 +148,16 @@ a.desc:after {
 .cart-widget p {
     margin-bottom: 0;
 }
+
+.user-passport-item {
+    border: 1px solid #343434;
+    background: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 40px;
+}
+.user-passport-item h3 {
+    text-align: center;
+}
+.user-passport-item h3 span {
+    color: red;
+}

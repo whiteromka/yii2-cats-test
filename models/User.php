@@ -104,14 +104,31 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getGendersWithEmpty(): array
+    {
+        return [
+            null => '',
+            0 => User::GENDER_FEMALE,
+            1 => User::GENDER_MALE
+        ];
+    }
+
     /**
      * Получить все возможные статусы
      */
     public static function getStatuses(): array
     {
         return [
-            0 => User::STATUS_DISACTIVE,
-            1 => User::STATUS_ACTIVE
+            1 => User::STATUS_DISACTIVE,
+            2 => User::STATUS_ACTIVE,
+            3 => 'Old',
+            4 => 'Old2'
         ];
+    }
+
+    public function getStatusAsString(): string
+    {
+        $allStatuses = self::getStatuses();
+        return $allStatuses[$this->status_id];
     }
 }

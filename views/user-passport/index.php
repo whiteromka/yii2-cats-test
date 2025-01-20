@@ -20,7 +20,9 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
     <h1>Пользователи с паспортами</h1>
 
     <!-- 1) Форма поиска -->
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'method' => 'GET',
+    ]); ?>
     <div class="row">
         <div class="col-3">
             <?= $form->field($searchModel, 'name') ?>
@@ -32,7 +34,7 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
             <?= $form->field($searchModel, 'email') ?>
         </div>
         <div class="col-3">
-            <?= $form->field($searchModel, 'gender')->dropDownList(User::getGenders()) ?>
+            <?= $form->field($searchModel, 'gender')->dropDownList(User::getGendersWithEmpty()) ?>
         </div>
     </div>
     <div class="form-group">
@@ -52,13 +54,13 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
         <div class="col-4">
             <div class="user-passport-item">
                 <h3>
+                    <span> <?= $user->id ?> </span>
                     <?= $user->name ?>
                     <?= $user->last_name ?>
-                    <span> <?= $user->id ?> </span>
                 </h3>
-                <p> <?= $user->email ?></p>
-                <p> <?= $user->gender ?></p>
-                <p> <?= $user->status_id ?></p>
+                <p> email: <?= $user->email ?></p>
+                <p> gender: <?= $user->gender ?></p>
+                <p> status: <?= $user->getStatusAsString() ?></p>
             </div>
         </div>
 

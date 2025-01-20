@@ -71,7 +71,7 @@ class UserPassportSearch extends User
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', trim($this->name)])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash]);

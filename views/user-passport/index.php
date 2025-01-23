@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
     <?php $form = ActiveForm::begin([
         'method' => 'GET',
     ]); ?>
+
+    <!-- Поиск по user-ам -->
     <div class="row">
         <div class="col-3">
             <?= $form->field($searchModel, 'name') ?>
@@ -37,9 +39,21 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
             <?= $form->field($searchModel, 'gender')->dropDownList(User::getGendersWithEmpty()) ?>
         </div>
     </div>
+
+    <!-- Поиск по passport-ам -->
+    <div class="row">
+        <div class="col-3">
+            <?= $form->field($searchModel, 'number')->label('Номер паспорта') ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($searchModel, 'country')->label('Страна по паспорту') ?>
+        </div>
+    </div>
+
     <div class="form-group">
         <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
     </div>
+
     <?php ActiveForm::end(); ?>
     <br>
     <hr>
@@ -59,8 +73,10 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
                     <?= $user->last_name ?>
                 </h3>
                 <p> email: <?= $user->email ?></p>
-                <p> gender: <?= $user->gender ?></p>
+                <p> gender: <?= $user->getGenderChar() ?></p>
                 <p> status: <?= $user->getStatusAsString() ?></p>
+                <p> country: <?= $user->passport->country ?? '' ?></p>
+                <p> passport number: <?= $user->passport->number ?? '' ?></p>
             </div>
         </div>
 

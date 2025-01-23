@@ -6,7 +6,7 @@ use yii\base\Widget;
 
 class ItemWidget extends Widget
 {
-    public ?string $imgSrc;
+    public ?string $imgSrc = null;
     public string $name;
     public string $description;
     public string $buttonName;

@@ -113,6 +113,12 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getGenderChar(): string
+    {
+        $genders = self::getGendersWithEmpty();
+        return $genders[$this->gender];
+    }
+
     /**
      * Получить все возможные статусы
      */

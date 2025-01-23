@@ -12,6 +12,12 @@ use yii\helpers\ArrayHelper;
  */
 class UserPassportSearch extends User
 {
+    /** @var int - Связанная колонка из паспорта */
+    public $number;
+
+    /** @var string - Связанная колонка из паспорта */
+    public $country;
+
     /**
      * {@inheritdoc}
      */
@@ -20,6 +26,7 @@ class UserPassportSearch extends User
         return [
             [['id', 'car_id', 'gender', 'status_id'], 'integer'],
             [['name', 'last_name', 'email', 'password_hash', 'created_at', 'updated_at'], 'safe'],
+            [['number', 'country'], 'safe'],
         ];
     }
 
@@ -28,7 +35,6 @@ class UserPassportSearch extends User
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -41,7 +47,8 @@ class UserPassportSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        // ->joinWith('passport');
+        $query = User::find()->joinWith('passport');// tables: user, passport
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
@@ -61,20 +68,24 @@ class UserPassportSearch extends User
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        // Поиск по поль-ям
         $query->andFilterWhere([
-            'id' => $this->id,
-            'car_id' => $this->car_id,
+            'user.id' => $this->id,
             'gender' => $this->gender,
             'status_id' => $this->status_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
-
         $query->andFilterWhere(['like', 'name', trim($this->name)])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash]);
+            ->andFilterWhere(['like', 'email', $this->email]);
+
+        // tables: user, passport
+        // Поиск по паспортам
+        $query->andFilterWhere([
+            'passport.number' => $this->number
+        ]);
+        $query->andFilterWhere(['like', 'passport.country', $this->country]);
 
         return $dataProvider;
     }

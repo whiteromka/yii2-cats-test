@@ -4,19 +4,27 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
-use yii\helpers\ArrayHelper;
 
 /**
- * UserPassportSearch represents the model behind the search form of `app\models\User`.
+ * UserUniversalSearch represents the model behind the search form of `app\models\User`.
  */
-class UserPassportSearch extends User
+class UserUniversalSearch extends User
 {
+    /** For passport */
     /** @var int - Связанная колонка из паспорта */
     public $number;
 
     /** @var string - Связанная колонка из паспорта */
     public $country;
+
+    /** For car */
+    /** @var string - Связанная колонка из машины  */
+    public $carName;
+
+    /** @var string - Связанная колонка из машины  */
+    public $mark;
+
+
 
     /**
      * {@inheritdoc}
@@ -27,7 +35,19 @@ class UserPassportSearch extends User
             [['id', 'car_id', 'gender', 'status_id'], 'integer'],
             [['name', 'last_name', 'email', 'password_hash', 'created_at', 'updated_at'], 'safe'],
             [['number', 'country'], 'safe'],
+            [['carName', 'mark'], 'safe'],
         ];
+    }
+
+    public function attributeLabels() {
+        $oldFields = parent::attributeLabels();
+        $newFields = [
+            'number' => 'Номер',
+            'country' => 'Страна',
+            'carName' => 'Название бренда машины',
+            'mark' => 'Марка машины'
+        ];
+        return array_merge($oldFields, $newFields);
     }
 
     /**
@@ -48,7 +68,7 @@ class UserPassportSearch extends User
     public function search($params)
     {
         // ->joinWith('passport');
-        $query = User::find()->joinWith('passport');// tables: user, passport
+        $query = User::find()->joinWith(['passport', 'car']); // tables: user, passport
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
@@ -56,8 +76,7 @@ class UserPassportSearch extends User
             ],
 //            'sort' => [
 //                'defaultOrder' => [
-//                    'created_at' => SORT_DESC,
-//                    'title' => SORT_ASC,
+//                    'name' => SORT_ASC,
 //                ]
 //            ],
         ]);
@@ -86,6 +105,12 @@ class UserPassportSearch extends User
             'passport.number' => $this->number
         ]);
         $query->andFilterWhere(['like', 'passport.country', $this->country]);
+
+        // Поиск по машинам
+        $query->andFilterWhere([
+            'car.name' => $this->carName,
+            'car.mark' => $this->mark
+        ]);
 
         return $dataProvider;
     }

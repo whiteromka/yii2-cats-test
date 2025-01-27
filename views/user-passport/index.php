@@ -4,12 +4,9 @@ use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\UserPassportSearch $searchModel */
+/** @var app\models\UserUniversalSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Users';
@@ -39,14 +36,26 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
             <?= $form->field($searchModel, 'gender')->dropDownList(User::getGendersWithEmpty()) ?>
         </div>
     </div>
+    <br>
 
     <!-- Поиск по passport-ам -->
     <div class="row">
         <div class="col-3">
-            <?= $form->field($searchModel, 'number')->label('Номер паспорта') ?>
+            <?= $form->field($searchModel, 'number') ?>
         </div>
         <div class="col-3">
-            <?= $form->field($searchModel, 'country')->label('Страна по паспорту') ?>
+            <?= $form->field($searchModel, 'country') ?>
+        </div>
+    </div>
+    <br>
+
+    <!-- Поиск по car-ам -->
+    <div class="row">
+        <div class="col-3">
+            <?= $form->field($searchModel, 'carName') ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($searchModel, 'mark') ?>
         </div>
     </div>
 
@@ -77,6 +86,10 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
                 <p> status: <?= $user->getStatusAsString() ?></p>
                 <p> country: <?= $user->passport->country ?? '' ?></p>
                 <p> passport number: <?= $user->passport->number ?? '' ?></p>
+                <?php if ($user->car) {?>
+                    <p> car: <?= $user->car->name ?? '' ?></p>
+                    <p> mark: <?= $user->car->mark ?? '' ?></p>
+                <?php } ?>
             </div>
         </div>
 

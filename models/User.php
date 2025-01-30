@@ -125,8 +125,8 @@ class User extends \yii\db\ActiveRecord
     public static function getStatuses(): array
     {
         return [
-            1 => User::STATUS_DISACTIVE,
-            2 => User::STATUS_ACTIVE,
+            1 => User::STATUS_ACTIVE ,
+            2 => User::STATUS_DISACTIVE,
             3 => 'Old',
             4 => 'Old2'
         ];

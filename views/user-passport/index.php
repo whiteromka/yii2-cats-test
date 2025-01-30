@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Status;
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\LinkPager;
@@ -83,7 +84,18 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
                 </h3>
                 <p> email: <?= $user->email ?></p>
                 <p> gender: <?= $user->getGenderChar() ?></p>
-                <p> status: <?= $user->getStatusAsString() ?></p>
+
+                <p>
+                    status: <?= $user->getStatusAsString() ?>
+                    <?php if ($user->status_id !== Status::STATUS_DISACTIVE) : ?>
+                        <a class="btn btn-sm btn-warning"
+                           href="/user-passport/disactive-status?id=<?= $user->id?>"
+                        >
+                            Set disactive
+                        </a>
+                    <?php endif;?>
+                </p>
+
                 <p> country: <?= $user->passport->country ?? '' ?></p>
                 <p> passport number: <?= $user->passport->number ?? '' ?></p>
                 <?php if ($user->car) {?>

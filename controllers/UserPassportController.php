@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Status;
+use app\models\User;
 use app\models\UserUniversalSearch;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -43,5 +45,24 @@ class UserPassportController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Деактивация статуса пользователя
+     */
+    public function actionDisactiveStatus(int $id)
+    {
+        // Найти нужного пользователя
+        /** @var User $user */
+        $user = User::find()->where(['id' => $id])->one();
+
+        // Деактивировать и сохранить
+        $user->status_id = Status::STATUS_DISACTIVE;
+        $user->save();
+
+//        $sql = 'update user set status_id = 2 where id = ' . 21;
+//        Yii::$app->db->createCommand($sql)->execute();
+
+        return $this->redirect(['index']);
     }
 }

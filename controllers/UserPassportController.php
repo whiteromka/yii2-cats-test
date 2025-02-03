@@ -65,4 +65,23 @@ class UserPassportController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    /**
+     * Деактивация статуса пользователя
+     */
+    public function actionDisactiveStatusAjax(int $id)
+    {
+        // Найти нужного пользователя
+        /** @var User $user */
+        $user = User::find()->where(['id' => $id])->one();
+
+        // Деактивировать и сохранить
+        $user->status_id = Status::STATUS_DISACTIVE;
+        $saveResult = $user->save();
+
+        return $this->asJson([
+            'success' => $saveResult ? 1 : 0,
+            'error' => $saveResult == false ? 'Произошла ошибка сохранения' : ''
+        ]);
+    }
 }

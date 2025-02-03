@@ -74,11 +74,12 @@ class UserUniversalSearch extends User
             'pagination' => [
                 'pageSize' => 100,
             ],
-//            'sort' => [
-//                'defaultOrder' => [
-//                    'name' => SORT_ASC,
-//                ]
-//            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'status_id' => SORT_ASC,
+                    'id' => SORT_ASC
+                ]
+            ],
         ]);
 
         $this->load($params);

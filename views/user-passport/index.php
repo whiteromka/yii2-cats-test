@@ -1,5 +1,6 @@
 <?php
 
+use app\assets\UserSearchAsset;
 use app\models\Status;
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
@@ -12,6 +13,7 @@ use yii\helpers\Html;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = 'Пользователи с паспортами';
+UserSearchAsset::register($this);
 ?>
 <div class="user-index">
 
@@ -86,10 +88,13 @@ $this->params['breadcrumbs'][] = 'Пользователи с паспортам
                 <p> gender: <?= $user->getGenderChar() ?></p>
 
                 <p>
-                    status: <?= $user->getStatusAsString() ?>
+                    <?php $cssId = 'status-id-' . $user->id?>
+                    status: <span id="<?= $cssId?>"><?= $user->getStatusAsString() ?></span>
+
                     <?php if ($user->status_id !== Status::STATUS_DISACTIVE) : ?>
-                        <a class="btn btn-sm btn-warning"
+                        <a class="btn btn-sm btn-warning js-btn-disactive"
                            href="/user-passport/disactive-status?id=<?= $user->id?>"
+                           data-user-id="<?= $user->id?>"
                         >
                             Set disactive
                         </a>

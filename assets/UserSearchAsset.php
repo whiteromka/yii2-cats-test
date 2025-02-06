@@ -13,7 +13,8 @@ class UserSearchAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/userSearch.js'
+        'js/userSearch.js',
+        'js/test.js'
     ];
 
     public $depends = [

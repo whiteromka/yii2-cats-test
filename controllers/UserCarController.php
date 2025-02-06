@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\User;
 use app\models\UserSearch;
+use Yii;
 use yii\web\Controller;
 
 class UserCarController extends Controller
@@ -15,7 +16,12 @@ class UserCarController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()->all();
+        $cache = Yii::$app->cache;
+        $users = $cache->getOrSet('users', function() {
+            $data = User::find()->joinWith('car')->all();
+            return $data;
+        }, 200);
+
         return $this->render('index', [
             'users' => $users,
         ]);

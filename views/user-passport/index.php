@@ -77,7 +77,7 @@ UserSearchAsset::register($this);
         /** @var User $user */
         foreach ($users as $user) : ?>
 
-        <div class="col-4">
+        <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="user-passport-item">
                 <h3>
                     <span> <?= $user->id ?> </span>

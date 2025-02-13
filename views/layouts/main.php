@@ -65,7 +65,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     ?>
 </header>
 
-<?= CartWidget::widget() ;?>
+<div id="js-cart-ajax-wrap">
+    <?= CartWidget::widget() ;?>
+</div>
+
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">

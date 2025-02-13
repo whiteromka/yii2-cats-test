@@ -1,3 +1,5 @@
+//https://www.youtube.com/shorts/jNQep4ocOGQ
+
 // var name; // Объявление переменной
 // let name; // Объявление переменной
 // name = 'Anna'; name = "Anna"; // Присвоение данных в переменную
@@ -10,7 +12,7 @@
 let chars = ['a', 'b', 'c'];
 for (let i = 0; i < chars.length; i++) {
     let current = chars[i];
-    console.log(current);
+    //console.log(current);
 }
 
 // WHILE
@@ -19,7 +21,7 @@ let i = 0;
 let countArray = names.length;
 while (i < countArray) {
     let currentName = names[i];
-    console.log(currentName);
+    //console.log(currentName);
     i++;
 }
 
@@ -47,6 +49,7 @@ while (i < countArray) {
 //     name: "John",
 //     age: 30,
 //     isAdmin: true,
+//
 //     sayAboutMe: function() {
 //         return 'My name is ' + this.name + '.I am ' + this.age + ' years old';
 //     },
@@ -54,11 +57,15 @@ while (i < countArray) {
 //         return this.isAdmin ? 'Yes' : 'No';
 //     }
 // }
-// console.log(man.sayAboutMe());
+//console.log(man.sayAboutMe());
 // console.log(man.checkIsAdmin());
 
 // FOR IN в объектах
-// let student = { name: 'Маша', class: 7, age: 12 }
+// let student = {
+//     name: 'Маша',
+//     class: 7,
+//     age: 12
+// }
 // for (let key in student) {
 //     console.log(key + ' - ' + student[key]);
 // }
@@ -66,13 +73,13 @@ while (i < countArray) {
 // Jquery ==============
 // $(document).ready(function() { // Jquery обертка. Когда страница полностью загрузилась начинаем исполнять ваш код
 //     // тут ваш код
-//     console.log('Весь html подгружен!')
+//     console.log('Весь html подгружен!');
 // });
 
 // В переменной selector объект Jquery который поймал в себя html с аттрибутом id = "useruniversalsearch-name"
-// let selector = $('#useruniversalsearch-name');
-// console.log(selector);
-// selector.val('Roooooman!!!!')
+let selector = $('#useruniversalsearch-name'); // $('.my-class');
+console.log(selector);
+//selector.val('Roooooman!!!!');
 
 // В переменной selector объект Jquery который поймал в себя все html эллементы с аттрибутом class = "form-control"
 // let selectors = $('.form-control');

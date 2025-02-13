@@ -11,6 +11,7 @@ class ItemWidget extends Widget
     public string $description;
     public string $buttonName;
     public string $buttonLink;
+    public int $catId;
 
     public function init()
     {
@@ -24,7 +25,8 @@ class ItemWidget extends Widget
             'name' => $this->name,
             'description' => $this->description,
             'buttonName' => $this->buttonName,
-            'buttonLink' => $this->buttonLink
+            'buttonLink' => $this->buttonLink,
+            'catId' => $this->catId,
         ]);
     }
 }

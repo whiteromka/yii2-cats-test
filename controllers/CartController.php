@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\CartCalculator;
+use app\components\CartWidget;
 use app\models\Cart;
 use app\models\CartItem;
 use app\models\Cat;
@@ -37,6 +38,37 @@ class CartController extends Controller
         }
 
         return $this->redirect(['/']);
+    }
+
+    /** // http://yii2-lessons.local/cart/add-ajax?id=316
+     * Добавить кота в корзину
+     *
+     * @param int $id - ID кота для добавления в корзину
+     */
+    public function actionAddAjax(int $id)
+    {
+        /** @var Cat $cat */
+        $cat = Cat::find()->where(['id' => $id])->one();
+        $cart = Cart::getActive();
+        if ($cat) {
+            $successCartItemSave = CartItem::create($cart->id, $id, $cat->price);
+            if ($successCartItemSave) {
+                $success = (new CartCalculator($cart, $cat))->calculate();
+                if ($success) {
+                   return $this->asJson([
+                       'success' => 1,
+                       'error' => '',
+                       'html' => CartWidget::widget()
+                   ]);
+                }
+            }
+        }
+
+        return $this->asJson([
+            'success' => 0,
+            'error' => 'Произошла ошибка в расчетах!',
+            'html' => ''
+        ]);
     }
 
     /**

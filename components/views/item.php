@@ -6,6 +6,7 @@
 /** @var string $description */
 /** @var string $buttonName */
 /** @var string $buttonLink */
+/** @var int $catId */
 ?>
 
 <div class="card">
@@ -17,7 +18,7 @@
         <h5 class="card-title"><?= $name?> </h5>
         <p class="card-text"> <?= $description ?></p>
         <?php if ($buttonName && $buttonLink) { ?>
-            <a href="<?= $buttonLink ?>" class="btn btn-success"> <?= $buttonName ?> </a>
+            <a href="<?= $buttonLink ?>" data-cat-id="<?= $catId?>" class="btn btn-success js-btn-cartAjax"> <?= $buttonName ?> </a>
         <?php } ?>
     </div>
 </div>

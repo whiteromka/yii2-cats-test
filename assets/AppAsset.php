@@ -25,7 +25,7 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
-        //'js/test.js'
+        'js/cartAjax.js'
     ];
 
     public $depends = [

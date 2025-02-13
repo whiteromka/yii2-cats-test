@@ -13,6 +13,21 @@ use yii\helpers\Url;
 $this->title = 'My Yii Application';
 ?>
 
+<div class="row">
+    <?php
+    foreach ($cats as $catObj) { ?>
+        <div class="col-lg-4 mb-3">
+            <?= ItemWidget::widget([
+                'imgSrc' => $catObj->getFirstImg(),
+                'name' => $catObj->name,
+                'description' => $catObj->getInfo(),
+                'buttonName' => 'Заказать кота',
+                'buttonLink' => Url::to(['cart/add', 'id' => $catObj->id]),
+                'catId' => $catObj->id,
+            ]) ?>
+        </div>
+    <?php  } ?>
+</div>
 
 <div class="site-index">
 
@@ -54,19 +69,7 @@ $this->title = 'My Yii Application';
                 <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
             </div>
 
-            <div class="col-lg-4 mb-3">
-               <h3><?= $catsSqlQuery?></h3>
-                <?php
-                   foreach ($cats as $cat) { ?>
-                       <?= ItemWidget::widget([
-                           'imgSrc' => $cat->getFirstImg(),
-                           'name' => $cat->name,
-                           'description' => $cat->getInfo(),
-                           'buttonName' => 'Заказать кота',
-                           'buttonLink' => Url::to(['cart/add', 'id' => $cat->id])
-                       ]) ?>
-                 <?php  } ?>
-            </div>
+
 
             <div class="col-lg-4">
                 <h2>Heading</h2>

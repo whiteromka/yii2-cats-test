@@ -77,14 +77,14 @@ while (i < countArray) {
 // });
 
 // В переменной selector объект Jquery который поймал в себя html с аттрибутом id = "useruniversalsearch-name"
-let selector = $('#useruniversalsearch-name'); // $('.my-class');
-console.log(selector);
+//let selector = $('#useruniversalsearch-name'); // $('.my-class');
+//console.log(selector);
 //selector.val('Roooooman!!!!');
 
 // В переменной selector объект Jquery который поймал в себя все html эллементы с аттрибутом class = "form-control"
-// let selectors = $('.form-control');
-// console.log(selectors);
-// selectors.remove(); // Удалить все пойманные элементы
+//let selectors = $('.form-control');
+//console.log(selectors);
+//selectors.remove(); // Удалить все пойманные элементы
 
 // let h1 = $('h1');
 // console.log(h1);
@@ -105,6 +105,7 @@ console.log(selector);
 
 // $('.user-passport-item').click(function() {
 //     $(this).find('h3').after('<p>это вставлено из Javascript</p>');
+//     $(this).before('<p> это из before вставлено</p>');
 // });
 
 

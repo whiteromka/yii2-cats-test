@@ -12,7 +12,9 @@
 <div class="card">
     <?php if ($imgSrc) { ?>
         <img src="<?= $imgSrc ?>" class="card-img-top" alt="<?= $name?>" title="<?= $name?>">
-    <? } ?>
+    <?php } else { ?>
+        <img src="/uploads/cats/no_photo.jpg" height="300px" class="card-img-top" alt="<?= $name?>" title="<?= $name?>">
+    <?php } ?>
 
     <div class="card-body">
         <h5 class="card-title"><?= $name?> </h5>

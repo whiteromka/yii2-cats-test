@@ -272,18 +272,11 @@ $this->beginPage() ?>
 </header><!-- End Header -->
 
 <?php
-    $menu = [
-        'Site Pages' => [
-            'About' => '/site/about',
-            'Contact' => Url::to(['/site/contact']),
-        ],
-        'Profile' => '/profile/index'
-    ];
+    $menu = Yii::$app->params['menu'];
 ?>
 
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
-
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
@@ -293,14 +286,25 @@ $this->beginPage() ?>
             </a>
         </li><!-- End Dashboard Nav -->
 
-        <?php foreach ($menu as $title => $item) :?>
+        <?php
+        $controllerName = Yii::$app->controller->id;
+        $cssNavOpen = '';
+        $sitePages = $menu['Site Pages'];
+        foreach ($sitePages as $url) {
+            if (strpos($url, $controllerName) !== false) {
+                $cssNavOpen = 'show';
+                break;
+            }
+        }
+        $cssCollapsed = $cssNavOpen ? '' : 'collapsed';
 
+        foreach ($menu as $title => $item) :?>
         <?php if (is_array($item)): ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <a class="nav-link <?= $cssCollapsed?>" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Site pages</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="components-nav" class="nav-content collapse <?= $cssNavOpen?>" data-bs-parent="#sidebar-nav">
 
                         <?php foreach ($item as $name => $url):?>
                         <li>

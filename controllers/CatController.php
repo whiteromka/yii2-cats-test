@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Creator;
 use app\models\Cat;
 use app\models\CatPic;
 use app\models\CatSearch;

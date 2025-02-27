@@ -85,10 +85,9 @@ class SiteController extends Controller
 //            ':name' => 'Vasay',
 //        ])->queryAll();
         */
-
+        $catName = Yii::$app->request->get('catName');
         $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
-
-        $cats = Cat::find()->orderBy('price DESC')->limit(10)->all();
+        $cats = Cat::find()->orderBy('price DESC')->where(['name' => $catName])->limit(100)->all();
         $catsSqlQuery = Cat::find()->limit(10)->orderBy('price DESC')->createCommand()->rawSql;
 
 //        $carBmwX5 = Car::find()

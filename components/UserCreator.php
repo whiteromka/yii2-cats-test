@@ -6,7 +6,7 @@ use app\models\Cat;
 use yii\db\Exception;
 
 /** Создавать котов */
-class CatCreator implements Creator
+class UserCreator implements Creator
 {
     private int $countErrors = 0;
     private int $countSuccess = 0;
@@ -43,24 +43,7 @@ class CatCreator implements Creator
      */
     public function create(int $count): void
     {
-        while ($count > 0) {
-            $cat = new Cat();
-            $dataCat = $this->getRandomData();
-            $cat->load($dataCat);
-            /** @var bool $currentCatSaveResult - true/false т.е. успешно сохранили кота или кот не сохранился */
-            $currentCatSaveResult = $cat->save(); // Сохранить/Обновить в БД - фреймворк сам знает что нужно сделать
-            if ($currentCatSaveResult) {
-                $this->countSuccess++;
-                $this->successCatNames[] = $cat->name;
-            } else {
-                $this->countErrors++;
-                // получить только значения из массива
-                //$errors = array_values($cat->getErrors());
-                // $this->errorsCatNames[$cat->name] = $errors[0]; // перезапись имен котов !!!
-                $this->badCats[] = $cat;
-            }
-            $count--;
-        }
+        // ....
     }
 
     /**

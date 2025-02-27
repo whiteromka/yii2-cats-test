@@ -27,6 +27,11 @@ $this->title = 'My Yii Application';
             ]) ?>
         </div>
     <?php  } ?>
+
+    <?php if (empty($cats)) :?>
+        <h2>Нет котов с таким именем!</h2>
+    <?php  endif; ?>
+
 </div>
 
 <div class="site-index">

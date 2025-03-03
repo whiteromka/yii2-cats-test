@@ -6,13 +6,25 @@ class SimpleCurl
 {
     public  function request()
     {
-        // post
-        // {
-        //    "userId": 1,
-        //    "id": 1,
-        //    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        //    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-        //}
+        // REST API - Средство общения программ через http(s) протокол.
+
+        // POST .../user/create {...} // создать пользователя
+        // GET .../user/12 // получить данные о поль-е
+        // POST .../user/delete/12 // удаление
+        // POST .../user/update/12 {...} // обновление
+
+        // GET — получение информации об объекте (ресурсе).
+        // POST — создание нового объекта (ресурса).
+        // PUT — полная замена объекта (ресурса) на обновленную версию.
+        // PATCH — частичное изменение объекта (ресурса).
+        // DELETE — удаление информации об объекте (ресурсе).
+
+        // Статус код - это признак успешности выполнения запроса
+        //      200 20X 2XX // хорошо
+        //      400 4XX // плохой запрос. Т.е. ошибка на стороне которая отправила запрос
+        //      500 ... // сервер сломался. Т.е. ошибка на стороне которая принимает запрос
+        //      100 // информационные
+        //      300 // редирект
 
         //    {
         //        "userId" : 1,
@@ -21,23 +33,10 @@ class SimpleCurl
         //        "body": "test body"
         //    }
 
-        //      200 20X 2XX // хорошо
-        //      400         // плохой запрос
-        //      500 // сервер сломался
-        //      100 // авторизация ???
-        //      300 // редирект ?
 
-        //REST API
-        // POST .../user/create {...} // создать пользователя
-        // GET .../user/12 // получить данные о поль-е
-        // POST .../user/delete/12 // удаление
-        // POST .../user/update/12 {...} // обновление
 
-        // GET .../user-by-email/rom@yandex.ru // получить данные о поль-е
-        // DELETE .../user/12
-        // PUT .../user/create {...} // обновление данных о существ пол-е
-        // PUCH .../user/create {...} // обновление данных о существ пол-е
-        // HEAD //
+
+
 
         $data = [
             "userId" => 2,

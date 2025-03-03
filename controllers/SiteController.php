@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\SimpleCurl;
 use app\models\Account;
 use app\models\Car;
 use app\models\Cat;
@@ -15,6 +16,13 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+    // site/curl
+    public function actionCurl()
+    {
+        $curl = new SimpleCurl();
+        $curl->request();
+    }
+
     public $layout = 'mainDesign';
 
     /**
@@ -59,7 +67,9 @@ class SiteController extends Controller
         ];
     }
 
-    /**
+    // cat-api/cat/
+
+    /** /site/index
      * Displays homepage.
      *
      * @return string
@@ -234,3 +244,22 @@ class SiteController extends Controller
     }
 
 }
+
+
+$data = array(
+    'name'  => 'Маффин',
+    'price' => 100.0
+);
+
+$ch = curl_init('https://example.com');
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_HEADER, false);
+$res = curl_exec($ch);
+curl_close($ch);
+
+$res = json_encode($res, JSON_UNESCAPED_UNICODE);
+print_r($res);

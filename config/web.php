@@ -54,7 +54,8 @@ $config = [
                 //'cat/view/<id:\d+>' => 'cat/view',
                 // \d+  - это регулярное выражение (число)
                 '/cat/create-cats/<count:\d+>' => '/cat/create-cats',
-                '/super-rom' => '/user/index'
+                '/super-rom' => '/user/index',
+                '/site/curl/<id:\d+>' => '/site/curl'
             ],
         ],
 

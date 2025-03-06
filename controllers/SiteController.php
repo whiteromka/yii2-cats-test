@@ -3,11 +3,10 @@
 namespace app\controllers;
 
 use app\components\SimpleCurl;
-use app\models\Account;
-use app\models\Car;
 use app\models\Cat;
 use Yii;
 use yii\filters\AccessControl;
+use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -16,11 +15,31 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    // site/curl
-    public function actionCurl()
+    // /site/curl/1
+    public function actionCurl(int $id)
     {
+        $type = 'comments';
         $curl = new SimpleCurl();
-        $curl->request();
+        $curl->request($id, $type);
+    }
+
+    // /site/client
+    public function actionClient()
+    {
+        $client = new Client();
+        $url = 'https://api.weather.yandex.ru/v2/forecast?lat=55.7558&lon=37.6178';
+        $keyName = 'X-Yandex-Weather-Key';
+        $secretKey = Yii::$app->params['YW'];
+        $result =  $client
+            ->createRequest()
+            ->setHeaders([$keyName => $secretKey])
+            ->setMethod('GET')
+            ->setUrl($url)
+            ->send();
+        $result = $result->getData();
+
+        debug($result);
+        die('!!!');
     }
 
     public $layout = 'mainDesign';

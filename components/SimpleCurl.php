@@ -2,14 +2,25 @@
 
 namespace app\components;
 
+use Yii;
+
 class SimpleCurl
 {
-    public  function request(int $id, string $type)
-    {
+    private float $lat;
+    private float $lon;
 
+    public function __construct(float $lat, float $lon)
+    {
+        $this->lat = $lat;
+        $this->lon = $lon;
+    }
+
+    public function request(): array
+    {
+        $accessKey = Yii::$app->params['YW'];
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'https://jsonplaceholder.typicode.com/' . $type . '/' . $id,
+            CURLOPT_URL => "https://api.weather.yandex.ru/v2/forecast?lat={$this->lat}&lon={$this->lon}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -17,17 +28,29 @@ class SimpleCurl
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET', // !!!
-            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'X-Yandex-Weather-Key: ' . $accessKey],
         ]);
         $response = curl_exec($curl);
         curl_close($curl);
 
-        $responseAsArray = json_decode($response, true);
-        debug($responseAsArray);
-        die;
-
+        $data = json_decode($response, true);
+        $data = $this->reconstructData($data);
+        return $data;
     }
 
+    private function reconstructData(array $data): array
+    {
+        $winDir = $data['fact']['wind_dir'];
+        // n e w s // $this->reconstructWinDir($winDir);
+        return [
+            'lat' => $data['info']['lat'],
+            'lon' => $data['info']['lon'],
+            'season' => $data['fact']['season'],
+            'temp' => $data['fact']['temp'],
+            'winDir' => $winDir,
+            'winSpeed' => $data['fact']['wind_speed']
+        ];
+    }
 
     // REST API - Средство общения программ через http(s) протокол.
 

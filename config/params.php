@@ -16,6 +16,7 @@ return [
             'About' => '/site/about',
             'Contact' => '/site/contact',
             'Login' => '/site/login',
+            'Weather' => '/weather/index',
         ],
         'Profile' => '/profile/index',
         'Cat Redactor' => '/cat/index',

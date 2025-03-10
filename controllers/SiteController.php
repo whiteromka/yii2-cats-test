@@ -15,12 +15,12 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    // /site/curl/1
-    public function actionCurl(int $id)
+
+    // site/curl?lat=1&lon=2
+    public function actionCurl(float $lat, float $lon)
     {
-        $type = 'comments';
-        $curl = new SimpleCurl();
-        $curl->request($id, $type);
+        $data = (new SimpleCurl($lat, $lon))->request();
+        return $this->asJson($data);
     }
 
     // /site/client

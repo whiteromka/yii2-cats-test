@@ -21,5 +21,7 @@ return [
         'Profile' => '/profile/index',
         'Cat Redactor' => '/cat/index',
     ],
-    'YW' => 'e6017b90-1d86-4e55-a0f0-1bc90e10b8f6'
+    'YW' => '???',
+    'DadataApiKey' => '???',
+    'DadataSecretKey' => '???'
 ];

@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\components\SimpleCurl;
+use app\components\YandexWeatherCurl;
 use app\models\Cat;
 use Yii;
 use yii\filters\AccessControl;
@@ -19,7 +19,7 @@ class SiteController extends Controller
     // site/curl?lat=1&lon=2
     public function actionCurl(float $lat, float $lon)
     {
-        $data = (new SimpleCurl($lat, $lon))->request();
+        $data = (new YandexWeatherCurl($lat, $lon))->request();
         return $this->asJson($data);
     }
 

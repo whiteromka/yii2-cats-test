@@ -4,7 +4,7 @@ namespace app\components;
 
 use Yii;
 
-class SimpleCurl
+class YandexWeatherCurl
 {
     private float $lat;
     private float $lon;

@@ -60,6 +60,8 @@ $config = [
                 // \d+  - это регулярное выражение (число)
                 '/cat/create-cats/<count:\d+>' => '/cat/create-cats',
                 '/super-rom' => '/user/index',
+                //'my-api-cat/get-by-name/<name:[^/]+>' => 'my-api-cat/get-by-name',
+                'my-api-cat/v1/delete/<id:\d+>' => 'my-api-cat/delete',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api-cat'],
             ],
         ],

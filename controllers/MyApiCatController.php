@@ -8,30 +8,70 @@ use yii\web\Controller;
 
 class MyApiCatController extends Controller
 {
-
-    // GET  /my-api-cat/get
-    public function actionGet()
+    public function beforeAction($action)
     {
-        Yii::$app->response->headers->set('Rox-X', 'X');
-        $cats = Cat::find()->limit(100)->all();
-        Yii::$app->response->statusCode = 400;
-        return $this->asJson($cats);
+        // Отключаем CSRF-валидацию для всех действий в этом контроллере
+        $this->enableCsrfValidation = false;// csrf
+        return parent::beforeAction($action);
     }
 
-    // POST /my-api-cat/add  {_name, age, gender}
+    private function response(
+        bool $success,
+        array $data = [],
+        $error = [],
+        int $statusCode = 200
+    )
+    {
+        Yii::$app->response->statusCode = $statusCode;
+        return [
+            'success' => $success,
+            'data' => $data,
+            'error' => $error
+        ];
+    }
+
+    /**
+     * Получить кота по имени
+     *
+     * http://yii2-lessons.local/my-api-cat/get-by-name?name=A
+     */
+    public function actionGetByName(string $name)
+    {
+        $cat = Cat::find()->where(['name' => $name])->asArray()->one();
+        if (!$cat) {
+            return $this->asJson($this->response(false, [], 'Кот не найден!', 400));
+        }
+        return $this->asJson($this->response(true, $cat, ''));
+    }
+
+    /**
+     * Добавить нового кота POST
+     *
+     * http://yii2-lessons.local/my-api-cat/add
+     */
     public function actionAdd()
     {
-        // CSRF !!!
-
-        //...
-        $cat = new Cat();
-        $cat->name = $_name;
-        // ...
-        if ($cat->save()) {
-           $res = ['success' => true];
-       } else {
-           $res = ['success' => false];
+        try {
+            $data = Yii::$app->request->post();
+            $cat = new Cat();
+            $cat->load(['Cat' => $data]);
+            if ($cat->save()) {
+                return $this->asJson($this->response(true, $data, ''));
+            }
+            return $this->asJson($this->response(false, [], $cat->getFirstErrors(), 400));
+        } catch (\Exception $e) {
+            return $this->asJson($this->response(false, [], 'произошла ошибка! ' . $e->getMessage(), 500));
         }
-        return $this->asJson($res);
+    }
+
+    /**
+     * Удалить кота DELETE
+     *
+     * http://yii2-lessons.local/my-api-cat/v1/delete/12
+     */
+    public function actionDelete(int $id)
+    {
+        $countDeleted = Cat::deleteAll(['id' => $id]);
+        return $this->asJson($this->response(true, ['deleted' => $countDeleted], ''));
     }
 }

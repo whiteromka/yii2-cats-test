@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\models\Cat;
 use Yii;
-use yii\web\Controller;
+use yii\rest\Controller;
 
 class MyApiCatController extends Controller
 {
@@ -52,7 +52,8 @@ class MyApiCatController extends Controller
     public function actionAdd()
     {
         try {
-            $data = Yii::$app->request->post();
+            $jsonData = Yii::$app->request->getRawBody();
+            $data = json_decode($jsonData, true);;
             $cat = new Cat();
             $cat->load(['Cat' => $data]);
             if ($cat->save()) {

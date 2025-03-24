@@ -66,6 +66,33 @@ class MyApiCatController extends Controller
     }
 
     /**
+     * Изменение кота
+     *
+     * http://yii2-lessons.local/my-api-cat/edit
+     */
+    public function actionEdit(int $id)
+    {
+        try {
+            $jsonData = Yii::$app->request->getRawBody();
+
+            $data = json_decode($jsonData, true);
+//            if (!array_key_exists('name', $data)) {
+//                return $this->asJson($this->response(false, [], 'Поле name нужно!!!!!', 400));
+//            }
+
+            $cat = Cat::findOne($id);
+
+            $cat->load(['Cat' => $data]);
+            if ($cat->save()) {
+                return $this->asJson($this->response(true, $data, ''));
+            }
+            return $this->asJson($this->response(false, [], $cat->getFirstErrors(), 400));
+        } catch (\Exception $e) {
+            return $this->asJson($this->response(false, [], 'произошла ошибка! ' . $e->getMessage(), 500));
+        }
+    }
+
+    /**
      * Удалить кота DELETE
      *
      * http://yii2-lessons.local/my-api-cat/v1/delete/12

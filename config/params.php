@@ -23,5 +23,9 @@ return [
     ],
     'YW' => '???',
     'DadataApiKey' => '???',
-    'DadataSecretKey' => '???'
+    'DadataSecretKey' => '???',
+    'Telegram' => [
+        'chatId' => -111,
+        'token' => '???',
+    ]
 ];

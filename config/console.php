@@ -3,6 +3,12 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
+$paramsLocal = __DIR__ . '/params-local.php';
+if (file_exists($paramsLocal)) {
+    $params = require $paramsLocal;
+}
+
+
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),

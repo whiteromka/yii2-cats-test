@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\components\CatCalculatorSingleton;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
@@ -21,14 +22,24 @@ use yii\console\ExitCode;
 class HelloController extends Controller
 {
     /**
-     * This command echoes what you have entered as the message.
-     * @param string $message the message to be echoed.
-     * @return int Exit code
+     * php yii hello/index
      */
-    public function actionIndex($message = 'hello world')
+    public function actionIndex()
     {
-        echo $message . "\n";
+        $cc = CatCalculatorSingleton::getInstance(); // 1
+        echo $cc->result() . PHP_EOL;
+        echo $cc->aaa() . PHP_EOL;
 
-        return ExitCode::OK;
+        $cc2 = CatCalculatorSingleton::getInstance(); // 1
+        echo $cc2->result() . PHP_EOL;
+
+        $cc3 = CatCalculatorSingleton::getInstance(); //1
+        echo $cc3->result() . PHP_EOL;
+
+        $cc4 = CatCalculatorSingleton::getInstance(); //1
+        echo $cc4->result() . PHP_EOL;
+        echo $cc4->aaa() . PHP_EOL;
+
+        die;
     }
 }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\CartCalculator;
 use app\components\CartWidget;
+use app\components\telegram\TelegramMessenger;
 use app\models\Cart;
 use app\models\CartItem;
 use app\models\Cat;
@@ -91,6 +92,11 @@ class CartController extends Controller
         $cart = Cart::getActive();
         $cart->status = 0;
         $cart->save();
+
+        (new TelegramMessenger())->send(
+            'Заказ на сайте котов. Заказано ' . count($cart->cartItems) . ' котов на сумму ' . $cart->final_sum . ' руб.' .
+            'Перейдите в админку что бы не скучно было <a href="http://yii2-lessons.local/">http://yii2-lessons.local/</a>'
+        );
 
         $order = new Order();
         $order->cart_id = $cart->id;

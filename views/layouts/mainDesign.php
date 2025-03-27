@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\NiceAdminAsset;
+use app\widgets\Alert;
 use yii\helpers\Url;
 
 NiceAdminAsset::register($this);
@@ -326,7 +327,7 @@ $this->beginPage() ?>
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-
+    <?= Alert::widget() ?>
     <?= $content ?>
 
 </main><!-- End #main -->

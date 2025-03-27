@@ -20,7 +20,7 @@ class UserPassportCreator
     private ?Generator $faker = null;
 
     /** @var int - Сложность хеширования пароля (4 - 31) */
-    private const DIFICULTY_PASSWORD = 4;
+    public const DIFICULTY_PASSWORD = 4;
 
     public function __construct(int $count = 20)
     {
@@ -59,9 +59,7 @@ class UserPassportCreator
         $user->name = $faker->firstName($gender);
         $user->last_name = $faker->lastName($gender);
         $user->email = $faker->email();
-        $user->password_hash = Yii::$app
-            ->getSecurity()
-            ->generatePasswordHash($faker->password(), UserPassportCreator::DIFICULTY_PASSWORD);
+        $user->password_hash = $user->generatePasswordHash($faker->password());
         $user->status_id = (random_int(1, 10) > 1) ? 1 : 0;
         $user->save();
         return $user;

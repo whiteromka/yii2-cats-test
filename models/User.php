@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\UserPassportCreator;
 use Yii;
 
 /**
@@ -33,6 +34,10 @@ class User extends \yii\db\ActiveRecord
     public const STATUS_ACTIVE = 'active';
     public const STATUS_DISACTIVE = 'disactive';
 
+    public string $password = '';
+
+    public string $password_repeat = '';
+
     /**
      * {@inheritdoc}
      */
@@ -50,13 +55,15 @@ class User extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 60],
             [['last_name'], 'string', 'max' => 60],
             [['password_hash'], 'string', 'max' => 100],
-            [['name', 'last_name', /*'email',*/ 'password_hash', 'status_id'], 'required'],
-            [['status_id'], 'integer'],
+            [['name', 'last_name', 'email', 'password_hash', 'status_id'], 'required'],
+            [['status_id', 'car_id'], 'integer'],
             [['gender'], 'integer'],
             ['gender', 'in', 'range' => [0, 1]],
             [['email'], 'email'],
             [['email'], 'unique'],
-            [['created_at', 'updated_at'], 'safe']
+            [['created_at', 'updated_at'], 'safe'],
+            [['password_repeat', 'password'], 'required'],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -136,5 +143,12 @@ class User extends \yii\db\ActiveRecord
     {
         $allStatuses = self::getStatuses();
         return $allStatuses[$this->status_id];
+    }
+
+    public function generatePasswordHash(string $password): string
+    {
+        return Yii::$app
+            ->getSecurity()
+            ->generatePasswordHash($password, UserPassportCreator::DIFICULTY_PASSWORD);
     }
 }

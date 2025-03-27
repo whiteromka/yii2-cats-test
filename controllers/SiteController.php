@@ -97,43 +97,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $u = yii::$app->user->identity;
-/** @var User $u */
-$u = User::find()->where(['id' => 4])->one();
-        (new TelegramMessenger())->send(
-            'Ого ' . $u->name . ' ' . $u->email  .  ' смотрит твоих котов прямо сейчас!'
-        );
-
-        /*
-        // Одна из будущих тем:
-        // 1 https://www.yiiframework.com/doc/guide/2.0/ru/start-databases
-        // 2 https://www.yiiframework.com/doc/guide/2.0/ru/db-query-builder
-
-        //$catX = Cat::find()->where(['name' => 'Myrzik']);
-        //$sql =  $catX->createCommand()->getRawSql();
-
-          // Пример прямого запроса к БД на вставку данных!
-//        $db = Yii::$app->getDb();
-//        $db->createCommand('INSERT INTO `cat` (`name`) VALUES (:name)', [
-//            ':name' => 'Qiang',
-//        ])->execute();
-
-//        $db = Yii::$app->getDb();
-//        $someCast = $db->createCommand('SELECT * FROM cat WHERE name = :name', [
-//            ':name' => 'Vasay',
-//        ])->queryAll();
-        */
         $catName = Yii::$app->request->get('catName');
         $cat = Cat::find()->where(['name' => 'Myrzik'])->one();
-        $cats = Cat::find()->orderBy('price DESC')->where(['name' => $catName])->limit(100)->all();
+        if ($catName) {
+            $cats = Cat::find()->orderBy('price DESC')->where(['name' => $catName])->limit(100)->all();
+        } else {
+            $cats = Cat::find()->orderBy('price DESC')->limit(100)->all();
+        }
+
         $catsSqlQuery = Cat::find()->limit(10)->orderBy('price DESC')->createCommand()->rawSql;
-//        $carBmwX5 = Car::find()
-//            ->where(['name' => 'bmw'])
-//            ->andWhere(['mark' => 'x5'])
-//            ->one();
-//        $account = Account::find()->where(['email' => 'anna@yandex.ru'])->one();
-//        $usersEmail = ['anna@yandex.ru111', 'rom@yandex.ru1111'];
-//        $accounts = Account::find()->where(['email' => $usersEmail])->all();
 
         return $this->render('index', [
             'cat' => $cat,

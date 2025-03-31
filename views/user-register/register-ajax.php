@@ -1,17 +1,23 @@
 <?php
 
+use app\assets\RegisterAjaxAsset;
+use app\components\RegisterSuccessWidget;
 use app\models\Status;
 use app\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 /** @var User $user */
-
+RegisterAjaxAsset::register($this);
 ?>
-<h1>User Register</h1>
+<h1>User Register-Ajax</h1>
 
 <div class="row">
-    <div class="col-lg-5">
+    <!-- Для JS куда вставлять всплывашку -->
+    <div class="js-success-message"></div>
+
+    <!-- Для JS что бы скрыть формы -->
+    <div class="col-lg-5 js-form">
 
         <?php $form = ActiveForm::begin([
                 'id' => 'user-form',
@@ -34,7 +40,7 @@ use yii\helpers\Html;
         <?= $form->field($user, 'password_repeat')->passwordInput()->label('Повтор пароля') ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-primary js-btn-register-ajax']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

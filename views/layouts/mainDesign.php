@@ -8,7 +8,7 @@ use app\widgets\Alert;
 use yii\helpers\Url;
 
 NiceAdminAsset::register($this);
-
+// $this->registerCsrfMetaTags();
 $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="en">

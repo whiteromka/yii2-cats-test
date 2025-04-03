@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$menu = require __DIR__ . '/menu.php';
 
 $paramsLocal = __DIR__ . '/params-local.php';
 if (file_exists($paramsLocal)) {
@@ -67,7 +68,7 @@ $config = [
         ],
 
     ],
-    'params' => $params,
+    'params' => array_merge($params, $menu),
 ];
 
 if (YII_ENV_DEV) {

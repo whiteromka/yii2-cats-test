@@ -5,31 +5,43 @@ namespace app\controllers;
 use app\models\User;
 use yii\web\Controller;
 use Yii;
+use yii\web\IdentityInterface;
 
 class UserLoginController extends Controller
 {
-    // /user-login/login
+    /** /user-login/login */
     public function actionLogin()
     {
-        // POST
-        $email = 'fgordeev@bk.ru';
-        $password = 'aaaaaa'; //12345
-
-        /** @var User $user */
-        $user = User::find()->where(['email' => $email])->one();
-        if ($user) {
-            $ps = $user->generatePasswordHash($password); // 12345
-            if ($ps === $user->password_hash) {
-                Yii::$app->user->login($user);
+        // !!! отрефачить
+        $error = '';
+        $user = new User();
+        $user->setScenario(User::SCENARIO_LOGIN);
+        if ($user->load(Yii::$app->request->post())) {
+            $passwordFromPost = $user->password;
+            $emailFromPost = $user->email;
+            if ($user->validate()) {
+                /** @var IdentityInterface $user */
+                $userFromDb = User::find()->where(['email' => $emailFromPost])->one();
+                if ($userFromDb) {
+                    $passwordHash = $userFromDb->generatePasswordHash($passwordFromPost);
+                    if ($passwordHash === $userFromDb->password_hash) {
+                        Yii::$app->user->login($userFromDb);
+                        return $this->redirect(['/cat/index']);
+                    }
+                }
+                $error = 'Не верные авторизационные данные';
             }
         }
-
-        return $this->redirect('/');
+        return $this->render('login', [
+            'user' => $user,
+            'error' => $error
+        ]);
     }
 
-    // /user-login/logout
+    /** /user-login/logout */
     public function actionLogout()
     {
+        Yii::$app->user->logout();
         return $this->redirect('/');
     }
 }

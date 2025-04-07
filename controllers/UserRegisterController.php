@@ -9,7 +9,7 @@ use Yii;
 
 class UserRegisterController extends Controller
 {
-    // user-register/register
+    /** user-register/register */
     public function actionRegister()
     {
         $user = new User();
@@ -30,7 +30,7 @@ class UserRegisterController extends Controller
         ]);
     }
 
-    // user-register/register-ajax
+    /** user-register/register-ajax **/
     public function actionRegisterAjax()
     {
         $user = new User();
@@ -39,6 +39,7 @@ class UserRegisterController extends Controller
         ]);
     }
 
+    /** user-register/register-ajax-logic */
     public function actionRegisterAjaxLogic()
     {
         $error = '';

@@ -27,6 +27,9 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const SCENARIO_LOGIN = 'login';
+    const SCENARIO_DEFAULT = 'default';
+
     /** @var string - пол мужской */
     public const GENDER_MALE = 'М';
 
@@ -48,6 +51,23 @@ class User extends ActiveRecord implements IdentityInterface
         return 'user';
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_LOGIN => ['email', 'password'],
+            self::SCENARIO_DEFAULT => ['email',
+                'password',
+                'last_name',
+                'status_id',
+                'password_hash',
+                'password_repeat',
+                'gender',
+                'name',
+                'created_at', 'updated_at'
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -62,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['gender'], 'integer'],
             ['gender', 'in', 'range' => [0, 1]],
             [['email'], 'email'],
-            [['email'], 'unique'],
+            [['email'], 'unique', 'on' => self::SCENARIO_DEFAULT],
             [['created_at', 'updated_at'], 'safe'],
             [['password_repeat', 'password'], 'required'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password'],
@@ -149,9 +169,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function generatePasswordHash(string $password): string
     {
-        return Yii::$app
-            ->getSecurity()
-            ->generatePasswordHash($password, UserPassportCreator::DIFICULTY_PASSWORD);
+        return sha1($password); // !
+//        return Yii::$app
+//            ->getSecurity()
+//            ->generatePasswordHash($password, UserPassportCreator::DIFICULTY_PASSWORD);
     }
 
     /**
